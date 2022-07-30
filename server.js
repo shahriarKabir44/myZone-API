@@ -1,8 +1,7 @@
 const express = require('express')
 
-require('dotenv').config()
 const cluster = require('cluster');
-
+const totalCPUs = require('os').cpus().length;
 
 if (cluster.isMaster) {
     for (let i = 0; i < totalCPUs; i++) {
