@@ -2,6 +2,9 @@ const express = require('express')
 
 const cluster = require('cluster');
 const totalCPUs = require('os').cpus().length;
+const connection = require('./utils/db')
+
+connection.connect()
 
 if (cluster.isMaster) {
     for (let i = 0; i < totalCPUs; i++) {
@@ -19,11 +22,12 @@ if (cluster.isMaster) {
 
 function startExpress() {
 
+    connection.connect()
     let app = express()
     app.use(express.json())
+    app.use('/user', require('./Routes/User.router'))
 
-
-    app.listen(process.env.PORT || 3000)
+    app.listen(process.env.PORT || 4000)
 
 }
 
