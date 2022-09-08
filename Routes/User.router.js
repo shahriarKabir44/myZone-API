@@ -3,6 +3,10 @@ const connection = require('../utils/db')
 const upload = require('multer')()
 const fs = require('fs')
 const path = require('path')
+const jwt = require('jsonwebtoken')
+
+const UserModel = require('../models/User.model')
+
 UserRouter.post('/setProfileImage', upload.array(), (req, res) => {
     let { id } = req.headers
     let dir = path.join(__dirname, '../uploads/profileImage')
@@ -14,25 +18,20 @@ UserRouter.post('/setProfileImage', upload.array(), (req, res) => {
 })
 
 UserRouter.post('/register', (req, res) => {
-    let { password, name, email } = req.body
-    connection.query(`insert into user(password,name,email) values("${password}","${name}","${email}")`, (err, data) => {
-        connection.query('select max(Id) as maxId from user', (err, userData) => {
-            console.log(userData)
-            res.send({ data: userData[0].maxId })
+    UserModel.register(req.body)
+        .then(newUser => {
+            let token = jwt.sign(newUser, process.env.jwtSecret)
+            res.send({ data: userData[0].maxId, token: token })
         })
-    })
+
 })
 
 UserRouter.post('/setProfileImageUrl', (req, res) => {
-    console.log(req.body)
+
     connection.query(`update user set profileImage="${req.body.profileImageURL}" where Id=${req.body.Id}`, (err, data) => {
         res.send({ data: 1 })
     })
 })
-UserRouter.get('/test', (req, res) => {
-    connection.query('select * from user', (err, data) => {
-        res.send(data)
-    })
-})
+
 
 module.exports = UserRouter

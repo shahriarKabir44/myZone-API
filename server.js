@@ -3,7 +3,7 @@ const express = require('express')
 const cluster = require('cluster');
 const totalCPUs = require('os').cpus().length;
 const connection = require('./utils/db')
-
+require('dotenv').config()
 connection.connect()
 
 if (cluster.isMaster) {
