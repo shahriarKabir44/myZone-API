@@ -1,18 +1,35 @@
 const UserRouter = require('express').Router()
-const upload = require('multer')()
+
 const fs = require('fs')
 const path = require('path')
 const jwt = require('jsonwebtoken')
 const validateJWT = require('../utils/validateJWT')
 const UserModel = require('../models/User.model')
+const multer = require('multer')
+const storage = multer.diskStorage({
+    destination: (req, res, cb) => {
+        let { id } = req.headers
+        const dir = 'uploads/profileImages'
+        if (fs.existsSync(dir)) {
+            return cb(null, dir)
+        }
+        else {
+            fs.mkdirSync(dir)
+            return cb(null, dir)
+        }
+    },
+    filename: (req, res, cb) => {
+        const { id } = req.headers
+        cb(null, `${id}.jpg`)
+    }
+})
 
-UserRouter.post('/setProfileImage', upload.array(), (req, res) => {
+const upload = multer({ storage })
+
+UserRouter.post('/setProfileImage', upload.single('file'), (req, res) => {
+    console.log(req.file)
     let { id } = req.headers
-    let dir = path.join(__dirname, '../uploads/profileImage')
-    if (!fs.existsSync(dir)) fs.mkdirSync(dir)
-    fs.writeFile(`${dir}/${id}.jpg`, req.body.file.replace(/^data:image\/jpeg;base64,/, "").replace(/^data:image\/jpg;base64,/, "").replace(/^data:image\/png;base64,/, "").replace(/^data:image\/webp;base64,/, ""), 'base64', (err) => {
-        res.send({ data: `http://localhost:4000/profileImage/${id}.jpg` })
-    })
+    res.send({ data: `http://localhost:4000/profileImages/${id}.jpg` })
 
 })
 
