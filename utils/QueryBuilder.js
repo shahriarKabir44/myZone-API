@@ -7,4 +7,8 @@ class QueryBuilder {
         return st;
 
     }
+
+
 }
+
+module.exports = QueryBuilder
