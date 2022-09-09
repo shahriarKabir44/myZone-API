@@ -7,6 +7,9 @@ class QueryBuilder {
         return st;
 
     }
+    static getLastInsertedRow(tableName) {
+        return `select * from ${tableName} where Id=(select max(Id) from ${tableName})`
+    }
 
 
 }

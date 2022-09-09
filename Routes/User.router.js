@@ -1,14 +1,13 @@
 const UserRouter = require('express').Router()
 
-const fs = require('fs')
-const path = require('path')
+
 const jwt = require('jsonwebtoken')
 const validateJWT = require('../utils/validateJWT')
 const UserModel = require('../models/User.model')
 const multer = require('multer')
+const fs = require('fs')
 const storage = multer.diskStorage({
     destination: (req, res, cb) => {
-        let { id } = req.headers
         const dir = 'uploads/profileImages'
         if (fs.existsSync(dir)) {
             return cb(null, dir)
@@ -27,7 +26,6 @@ const storage = multer.diskStorage({
 const upload = multer({ storage })
 
 UserRouter.post('/setProfileImage', upload.single('file'), (req, res) => {
-    console.log(req.file)
     let { id } = req.headers
     res.send({ data: `http://localhost:4000/profileImages/${id}.jpg` })
 
