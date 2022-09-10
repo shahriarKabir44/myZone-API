@@ -20,4 +20,5 @@ module.exports = class Post {
             values: [(postImageURLs), postId]
         })
     }
+
 }

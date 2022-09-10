@@ -17,7 +17,8 @@ module.exports = class User {
     }
     static async setProfileImage(Id, profileImage) {
         return await Promisify({
-            sql: `update user set profileImage="${profileImage}" where Id=${Id}`
+            sql: `update user set profileImage="?" where Id=?`,
+            values: [profileImage, Id]
         })
     }
 

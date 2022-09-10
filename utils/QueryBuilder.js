@@ -1,8 +1,8 @@
 class QueryBuilder {
     static insertQuery(tableName, fields) {
 
-        let st = `insert into ${tableName} (${fields.toString()}) values(${new Array(fields.length).fill('?').toString()})`
-        return st;
+        return `insert into ${tableName} (${fields.toString()}) values(${new Array(fields.length).fill('?').toString()})`
+
 
     }
     static getLastInsertedRow(tableName) {
