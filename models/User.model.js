@@ -4,13 +4,18 @@ const defaultCoverPhoto = "https://www.al.com/resizer/ILBcdq1ksZC39_8hhnJ_HXsP9j
 
 module.exports = class User {
     static async register(userInfo) {
-
-        await Promisify({
-            sql: QueryBuilder.insertQuery('user', ['password', 'name', 'email', 'coverPhoto']),
-            values: [userInfo.password, userInfo.name, userInfo.email, defaultCoverPhoto]
-        })
+        try {
+            await Promisify({
+                sql: QueryBuilder.insertQuery('user', ['password', 'name', 'email', 'coverPhoto']),
+                values: [userInfo.password, userInfo.name, userInfo.email, defaultCoverPhoto]
+            })
+        }
+        catch (err) {
+            return null
+        }
         let newUserRow = await Promisify({
-            sql: `SELECT * FROM  user where user.Id= (select max(Id) from user) ;`
+            sql: `SELECT * FROM  user where user.email= ? ;`,
+            values: [userInfo.email]
         })
 
         return newUserRow[0]

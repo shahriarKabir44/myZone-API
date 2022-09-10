@@ -55,6 +55,10 @@ UserRouter.post('/login', (req, res) => {
 UserRouter.post('/register', (req, res) => {
     UserModel.register(req.body)
         .then(newUser => {
+            if (!newUser) {
+                res.send({ Id: null, token: null })
+                return
+            }
             let token = jwt.sign(newUser, process.env.jwtSecret)
             res.send({ Id: newUser.Id, token: token })
         })

@@ -23,7 +23,7 @@ const UserType = new GraphQLObjectType({
         numFriends: { type: GraphQLInt },
         websocketid: { type: GraphQLString },
         serviceworker_id: { type: GraphQLString },
-
+        name: { type: GraphQLString }
     })
 })
 
