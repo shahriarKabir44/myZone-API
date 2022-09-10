@@ -12,7 +12,7 @@ module.exports = class Post {
         })
         return await promisify({
             sql: QueryBuilder.getLastInsertedRow('post')
-        })[0]
+        })
     }
     static async setPostImage(postId, postImageURLs) {
         return await promisify({

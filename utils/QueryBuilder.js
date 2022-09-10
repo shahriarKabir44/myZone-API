@@ -1,9 +1,7 @@
 class QueryBuilder {
     static insertQuery(tableName, fields) {
 
-        let st = `insert into ${tableName} (${fields.toString()}) values(${((x) => {
-            return new Array(x).fill('?').toString()
-        })(fields.length)})`
+        let st = `insert into ${tableName} (${fields.toString()}) values(${new Array(fields.length).fill('?').toString()})`
         return st;
 
     }

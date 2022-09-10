@@ -28,7 +28,7 @@ function startExpress() {
     app.use(require('cors')())
     app.use(express.json())
     app.use('/user', require('./Routes/User.router'))
-
+    app.use('/post', require('./Routes/Post.router'))
     app.listen(process.env.PORT || 4000)
 
 }

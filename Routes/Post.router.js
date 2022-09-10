@@ -11,24 +11,28 @@ const storage = multer.diskStorage({
             return cb(null, dir)
         }
         else {
-            fs.mkdirSync(dir)
+            if (!fs.existsSync('uploads/posts/')) fs.mkdirSync('uploads/posts/')
+            if (!fs.existsSync(`uploads/posts/${postedby}`)) fs.mkdirSync(`uploads/posts/${postedby}`)
+            if (!fs.existsSync(dir)) fs.mkdirSync(dir)
+
             return cb(null, dir)
         }
     },
     filename: (req, res, cb) => {
         const { postedby, postid, index } = req.headers
-        req.postDir = `posts/${postedby}/${postid}/${index}.jpg`
+        req.postDir = `http://localhost:4000/posts/${postedby}/${postid}/${index}.jpg`
         cb(null, `${index}.jpg`)
     }
 })
 
 const upload = multer({ storage })
 
-PostRouter.post('/uploadPostImage', upload.single('file'), (req, res) => {
-    res.send(req.postDir)
+PostRouter.post('/uploadPostImage', [validateJWT, upload.single('file')], (req, res) => {
+
+    res.send({ url: req.postDir })
 })
 
-PostRouter.post('/setPostImageURLs', (req, res) => {
+PostRouter.post('/setPostImageURLs', validateJWT, (req, res) => {
     const { Id, attached_media } = req.body
     PostModel.setPostImage(Id, attached_media)
         .then(() => {
@@ -38,9 +42,10 @@ PostRouter.post('/setPostImageURLs', (req, res) => {
 
 PostRouter.post('/createPost', validateJWT, (req, res) => {
     const { postedBy, postBody } = req.body
+    console.log(req.body)
     PostModel.createPost(postedBy, postBody)
         .then((newPost) => {
-            res.send(newPost);
+            res.send({ newPost: newPost[0] });
         })
 })
 
