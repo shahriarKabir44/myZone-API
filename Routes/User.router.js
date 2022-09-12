@@ -45,8 +45,8 @@ UserRouter.post('/login', (req, res) => {
                 res.send({ data: -1 })
             }
             else {
-                let token = jwt.sign()
                 userInfo.password = ''
+                let token = jwt.sign(userInfo, process.env.jwtSecret)
                 res.send({ token: token, data: userInfo })
             }
         })

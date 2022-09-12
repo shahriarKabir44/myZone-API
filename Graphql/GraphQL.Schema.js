@@ -23,7 +23,18 @@ const UserType = new GraphQLObjectType({
         numFriends: { type: GraphQLInt },
         websocketid: { type: GraphQLString },
         serviceworker_id: { type: GraphQLString },
-        name: { type: GraphQLString }
+        name: { type: GraphQLString },
+        createdPosts: {
+            type: new GraphQLList(PostType),
+            async resolve(parent, args) {
+                return Promisify({
+                    sql: `select * from post
+                    where post.posted_by=?
+                    order by Id desc limit 0,5;`,
+                    values: [parent.Id]
+                })
+            }
+        }
     })
 })
 
@@ -50,6 +61,7 @@ const PostType = new GraphQLObjectType({
         posted_day: { type: GraphQLInt },
         posted_on: { type: GraphQLFloat },
         numReactions: { type: GraphQLInt },
+        numComments: { type: GraphQLInt },
         creatorInfo: {
             type: UserType,
             async resolve(parent, args) {
