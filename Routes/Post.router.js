@@ -42,7 +42,6 @@ PostRouter.post('/setPostImageURLs', validateJWT, (req, res) => {
 
 PostRouter.post('/createPost', validateJWT, (req, res) => {
     const { postedBy, postBody } = req.body
-    console.log(req.body)
     PostModel.createPost(postedBy, postBody)
         .then((newPost) => {
             res.send({ newPost: newPost[0] });

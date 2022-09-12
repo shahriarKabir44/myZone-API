@@ -28,12 +28,10 @@ module.exports = class User {
     }
 
     static async login(email, password) {
-        console.log(email, password,"here")
         let user = await Promisify({
             sql: `select * from user where email=? and password=?;`,
             values: [email, password]
         })
-        console.log(user)
         if (user.length == 0) {
             return -1
         }
