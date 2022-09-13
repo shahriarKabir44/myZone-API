@@ -9,8 +9,9 @@ module.exports = class CommentModel {
             values: [commentBody, commentedBy, postId, time]
         })
         let [newComment] = await Promisify({
-            sql: `select * from post_comments where
-                 postId=? and commentedBy=? and time=?`,
+            sql: `select post_comments.commentBody, post_comments.time, user.name as commenterName, user.Id as commenterId,user.profileImage as commenterProfileImage,post_comments.Id as commentId
+            from post_comments,user 
+            where post_comments.commentedBy=user.Id and post_comments.postId=? and post_comments.commentedBy=? and time=?;`,
             values: [postId, commentedBy, time]
         })
         return newComment

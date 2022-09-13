@@ -22,19 +22,22 @@ module.exports = class User {
     }
     static async setProfileImage(Id, profileImage) {
         return await Promisify({
-            sql: `update user set profileImage="?" where Id=?`,
+            sql: `update user set profileImage=-? where Id=?`,
             values: [profileImage, Id]
         })
     }
 
     static async login(email, password) {
+
         let user = await Promisify({
             sql: `select * from user where email=? and password=?;`,
             values: [email, password]
         })
+        console.log(user)
         if (user.length == 0) {
             return -1
         }
+
         else return user[0]
     }
     static async getAll() {
