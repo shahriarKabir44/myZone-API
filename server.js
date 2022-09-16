@@ -21,15 +21,11 @@ if (cluster.isMaster) {
 
 
 function startExpress() {
+    require('./utils/socketHandler')
+
     let app = express()
-    const httpServer = require('http').createServer(app)
-    const io = require('socket.io')(httpServer, {
-        cors: {
-            origin: "*",
-        }
-    })
+
     connection.connect()
-    io.on('connection', require('./utils/socketHandler'))
     app.use(express.static('uploads'))
     app.use(require('cors')())
     app.use(express.json())
@@ -44,7 +40,7 @@ function startExpress() {
             graphiql: true
         }
     )));
-    httpServer.listen(process.env.PORT || 4000)
+    app.listen(process.env.PORT || 4000)
 
 }
 

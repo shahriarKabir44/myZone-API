@@ -34,7 +34,12 @@ module.exports = class User {
             values: [profileImage, Id]
         })
     }
-
+    static async setWsId(Id, websocketid) {
+        Promisify({
+            sql: `update user set websocketId=? where Id=?;`,
+            values: [websocketid, Id]
+        })
+    }
     static async login(email, password) {
 
         let user = await Promisify({
