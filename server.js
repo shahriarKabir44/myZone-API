@@ -32,6 +32,7 @@ function startExpress() {
     app.use('/post', require('./Routes/Post.router'))
     app.use('/postInteraction', require('./Routes/PostInteraction.router'))
     app.use('/friendship', require('./Routes/Friendship.router'))
+    app.use('/conversation', require('./Routes/Conversation.router'))
     app.listen(process.env.PORT || 4000)
     app.use('/graphql', graphqlHTTP.graphqlHTTP(req => (
         {
