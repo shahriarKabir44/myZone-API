@@ -4,13 +4,20 @@ const validateJWT = require('../utils/validateJWT')
 
 ConversationRoute.post('/createConversation', validateJWT, (req, res) => {
     ConversationModel.createConversation(req.body)
-        .then((converstion) => {
-            res.send({ data: converstion[0] })
+        .then((conversation) => {
+            res.send({ data: conversation[0] })
         })
 })
 ConversationRoute.post('/getConversationMessages', validateJWT, (req, res) => {
     ConversationModel.getConversationMessages(req.body)
         .then(data => res.send({ data: data }))
+})
+
+ConversationRoute.post('/createMessage', (req, res) => {
+    ConversationModel.createMessage(req.body)
+        .then(() => {
+            res.send({ data: 1 })
+        })
 })
 
 ConversationRoute.post('/getParticipantInfo', validateJWT, (req, res) => {

@@ -81,7 +81,7 @@ CREATE TABLE `friendship` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
  
-CREATE TABLE `converstion` (
+CREATE TABLE `conversation` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `receiver` int NOT NULL,
   `sender` int NOT NULL,
@@ -114,7 +114,7 @@ CREATE TABLE `message` (
   `time` int NOT NULL,
   KEY `conversation_idx` (`conversation_id`),
   KEY `sender_idx` (`sender`),
-  CONSTRAINT `conversation` FOREIGN KEY (`conversation_id`) REFERENCES `converstion` (`Id`),
+  CONSTRAINT `conversation` FOREIGN KEY (`conversation_id`) REFERENCES `conversation` (`Id`),
   CONSTRAINT `message_sender` FOREIGN KEY (`sender`) REFERENCES `user` (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 

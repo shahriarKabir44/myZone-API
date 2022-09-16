@@ -24,7 +24,6 @@ socketServer.on('connection', (socket) => {
                 const { participantId } = body
                 UserModel.findById(participantId)
                     .then(({ websocketId }) => {
-                        console.log(websocketId)
                         socketServer.clients.forEach(client => {
                             if (client.Id == websocketId) {
 
