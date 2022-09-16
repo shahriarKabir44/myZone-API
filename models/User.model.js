@@ -5,7 +5,7 @@ const defaultCoverPhoto = "https://www.al.com/resizer/ILBcdq1ksZC39_8hhnJ_HXsP9j
 module.exports = class User {
     static async findById(Id) {
         let [user] = await Promisify({
-            sql: `select Id, name, email, profileImage, coverPhoto, numFriends, websocketid, serviceworker_id
+            sql: `select Id, name, email, profileImage, coverPhoto, numFriends, websocketId, serviceworker_id
              from user where Id=?;`,
             values: [Id]
         })
@@ -34,7 +34,7 @@ module.exports = class User {
             values: [profileImage, Id]
         })
     }
-    static async setWsId(Id, websocketid) {
+    static async setWebSocketId(Id, websocketid) {
         Promisify({
             sql: `update user set websocketId=? where Id=?;`,
             values: [websocketid, Id]

@@ -1,5 +1,6 @@
 const WebSocket = require('ws')
 const socketServer = new WebSocket.Server({ port: 4030 });
+const UserModel = require('../models/User.model')
 function* socketIdGenerator() {
     let index = 0;
 
@@ -13,10 +14,26 @@ socketServer.on('connection', (socket) => {
     socket.Id = generator.next().value
     socket.on('message', (data) => {
         let message = JSON.parse(data.toString())
-        console.log(message);
+        const { body } = message
         switch (message.type) {
             case 'setWebSocketId':
-                console.log(socket.Id)
+                const { userId } = body
+                UserModel.setWebSocketId(userId, socket.Id)
+                break;
+            case 'personalMessage':
+                const { participantId } = body
+                UserModel.findById(participantId)
+                    .then(({ websocketId }) => {
+                        console.log(websocketId)
+                        socketServer.clients.forEach(client => {
+                            if (client.Id == websocketId) {
+
+                                client.send(JSON.stringify(body))
+
+                            }
+                        })
+                    })
+                break;
         }
 
     })
