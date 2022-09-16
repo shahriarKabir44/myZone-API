@@ -3,6 +3,14 @@ const QueryBuilder = require('../utils/QueryBuilder')
 const defaultCoverPhoto = "https://www.al.com/resizer/ILBcdq1ksZC39_8hhnJ_HXsP9j0=/800x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/NSDL77J3KJFZXCK3MFWAV7HMUE.JPG"
 
 module.exports = class User {
+    static async findById(Id) {
+        let [user] = await Promisify({
+            sql: `select Id, name, email, profileImage, coverPhoto, numFriends, websocketid, serviceworker_id
+             from user where Id=?;`,
+            values: [Id]
+        })
+        return user
+    }
     static async register(userInfo) {
         try {
             await Promisify({
