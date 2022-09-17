@@ -11,6 +11,22 @@ module.exports = class ConversationModel {
         })
 
     }
+    static async getConversationList({ userId, pageNumber }) {
+        let conversations = await Promisify({
+            sql: `select * from conversation where participant1=? or participant2=?
+                order by time desc limit ?,20;`,
+            values: [userId, userId, pageNumber]
+        })
+        let promises = []
+        for (let conversation of conversations) {
+            promises.push(UserModel.findById(userId == conversation.participant2 ? conversation.participant1 : conversation.participant2)
+                .then(({ Id, name, profileImage }) => {
+                    conversation.participantInfo = { Id, name, profileImage }
+                }))
+        }
+        await Promise.all(promises);
+        return conversations
+    }
     static async findById(Id) {
         return Promisify({
             sql: `select * from conversation where

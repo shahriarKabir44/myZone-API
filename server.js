@@ -3,6 +3,7 @@ const graphqlHTTP = require('express-graphql');
 const cluster = require('cluster');
 const totalCPUs = require('os').cpus().length;
 const connection = require('./utils/db')
+const validateJWT = require('./utils/validateJWT')
 require('dotenv').config()
 connection.connect()
 
@@ -33,7 +34,7 @@ function startExpress() {
     app.use('/post', require('./Routes/Post.router'))
     app.use('/postInteraction', require('./Routes/PostInteraction.router'))
     app.use('/friendship', require('./Routes/Friendship.router'))
-    app.use('/conversation', require('./Routes/Conversation.router'))
+    app.use('/conversation', validateJWT, require('./Routes/Conversation.router'))
     app.use('/graphql', graphqlHTTP.graphqlHTTP(req => (
         {
             schema: require('./Graphql/Graphql.Schema'),

@@ -1,8 +1,10 @@
 const connection = require('./db')
 
-module.exports = function (sqlObject) {
+module.exports = function ({ sql, values }) {
     return new Promise(function (resolve, reject) {
-        connection.query(sqlObject, (err, rows) => {
+        connection.query({
+            sql, values
+        }, (err, rows) => {
             if (err) reject(err)
             else resolve(rows)
         })
