@@ -27,7 +27,7 @@ socketServer.on('connection', (socket) => {
                         socketServer.clients.forEach(client => {
                             if (client.Id == websocketId) {
 
-                                client.send(JSON.stringify(body))
+                                client.send(JSON.stringify(message))
 
                             }
                         })
