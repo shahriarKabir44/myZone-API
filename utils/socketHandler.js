@@ -15,6 +15,7 @@ socketServer.on('connection', (socket) => {
     socket.on('message', (data) => {
         let message = JSON.parse(data.toString())
         const { body } = message
+        console.log(message)
         switch (message.type) {
             case 'setWebSocketId':
                 const { userId } = body
@@ -33,6 +34,8 @@ socketServer.on('connection', (socket) => {
                         })
                     })
                 break;
+            case 'notification':
+                require('./WebSocketManagers/sendWSNotification')(socketServer, message)
         }
 
     })

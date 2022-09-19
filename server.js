@@ -35,6 +35,7 @@ function startExpress() {
     app.use('/postInteraction', require('./Routes/PostInteraction.router'))
     app.use('/friendship', require('./Routes/Friendship.router'))
     app.use('/conversation', validateJWT, require('./Routes/Conversation.router'))
+    app.use('/notification', validateJWT, require('./Routes/Notification.router'))
     app.use('/graphql', graphqlHTTP.graphqlHTTP(req => (
         {
             schema: require('./Graphql/Graphql.Schema'),
