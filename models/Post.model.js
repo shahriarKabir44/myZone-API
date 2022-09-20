@@ -7,8 +7,8 @@ module.exports = class Post {
         let currentDay = Math.floor((currentTime) / (24 * 3600 * 1000))
         await promisify({
 
-            sql: QueryBuilder.insertQuery('post', ['body', 'posted_by', 'posted_day', 'posted_on']),
-            values: [postBody, postedBy, currentDay, currentTime]
+            sql: QueryBuilder.insertQuery('post', ['body', 'posted_by', 'posted_day', 'posted_on', 'numReactions', 'numComments']),
+            values: [postBody, postedBy, currentDay, currentTime, 0, 0]
         })
         return await promisify({
             sql: QueryBuilder.getLastInsertedRow('post')

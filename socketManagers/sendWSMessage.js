@@ -1,4 +1,4 @@
-const UserModel = require('../../models/User.model')
+const UserModel = require('../models/User.model')
 module.exports = function (socketServer, message) {
     UserModel.findById(message.body.receiverId * 1)
         .then(({ websocketId }) => {
