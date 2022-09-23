@@ -86,6 +86,41 @@ const PostType = new GraphQLObjectType({
     })
 })
 
+const NotificationType = new GraphQLObjectType({
+    name: 'notification',
+    fields: () => ({
+        Id: { type: GraphQLID },
+        senderId: { type: GraphQLID },
+        receiverId: { type: GraphQLID },
+        body: { type: GraphQLString },
+        time: { type: GraphQLFloat },
+        relatedSchemaId: { type: GraphQLID },
+        type: { type: GraphQLString },
+        relatedSchemaInfo: {
+            type: GraphQLString,
+            async resolve(parent, args) {
+                if (parent.type === 1 || parent.type === 2) {
+                    let [post] = await Promisify({
+                        sql: `select * from post where Id=?;`,
+                        values: [parent.relatedSchemaId]
+                    })
+                    return JSON.stringify(post)
+                }
+            }
+        },
+        senderInfo: {
+            type: UserType,
+            async resolve(parent, args) {
+                let [user] = await Promisify({
+                    sql: `select * from user where Id=?`,
+                    values: [parent.senderId]
+                })
+                return user
+            }
+        }
+    })
+})
+
 
 const RootQueryType = new GraphQLObjectType({
     name: 'rootQuery',
@@ -114,6 +149,20 @@ const RootQueryType = new GraphQLObjectType({
                     values: [args.Id]
                 })
                 return post[0]
+            }
+        },
+        getNotifications: {
+            type: new GraphQLList(NotificationType),
+            args: {
+                receiverId: { type: GraphQLID },
+                pageNumber: { type: GraphQLInt }
+            },
+            async resolve(parent, args) {
+                return Promisify({
+                    sql: `select * from notification where
+                    receiverId =? order by time desc limit ?,10;`,
+                    values: [args.receiverId, args.pageNumber]
+                })
             }
         }
     }

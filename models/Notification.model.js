@@ -14,4 +14,5 @@ module.exports = class NotificationModel {
         })
         return newNotification
     }
+
 }
