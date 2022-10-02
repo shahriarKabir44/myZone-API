@@ -25,7 +25,6 @@ module.exports = class User {
             sql: `SELECT * FROM  user where user.email= ? ;`,
             values: [userInfo.email]
         })
-
         return newUserRow[0]
     }
     static async setProfileImage(Id, profileImage) {
@@ -46,7 +45,6 @@ module.exports = class User {
             sql: `select * from user where email=? and password=?;`,
             values: [email, password]
         })
-        console.log(user)
         if (user.length == 0) {
             return -1
         }

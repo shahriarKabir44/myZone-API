@@ -17,6 +17,7 @@ const UserType = new GraphQLObjectType({
     name: 'user',
     fields: () => ({
         Id: { type: GraphQLID },
+
         email: { type: GraphQLString },
         profileImage: { type: GraphQLString },
         coverPhoto: { type: GraphQLString },
@@ -54,7 +55,8 @@ const CommentType = new GraphQLObjectType({
 const PostType = new GraphQLObjectType({
     name: 'post',
     fields: () => ({
-        Id: { type: GraphQLID },
+        id: { type: GraphQLID },
+        Id: { type: GraphQLID, resolve(parent, args) { return parent.id } },
         body: { type: GraphQLString },
         attached_media: { type: GraphQLString },
         posted_by: { type: GraphQLID },
@@ -65,6 +67,7 @@ const PostType = new GraphQLObjectType({
         creatorInfo: {
             type: UserType,
             async resolve(parent, args) {
+                console.log(parent)
                 let user = await Promisify({
                     sql: `select * from user where Id=?`,
                     values: [parent.posted_by]

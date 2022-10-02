@@ -18,7 +18,7 @@ socketServer.on('connection', (socket) => {
         if (message.type == 'setWebSocketId') {
 
             const { userId } = body
-            UserModel.setWebSocketId(userId, socket.Id)
+            socket.Id = userId
         }
         else if (message.type == 'personalMessage' || message.type == 'notification') {
             require('./sendWSMessage')(socketServer, message)

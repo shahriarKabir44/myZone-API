@@ -38,7 +38,7 @@ function startExpress() {
     app.use('/notification', validateJWT, require('./Routes/Notification.router'))
     app.use('/graphql', graphqlHTTP.graphqlHTTP(req => (
         {
-            schema: require('./Graphql/Graphql.Schema'),
+            schema: require('./Graphql/GraphQL.Schema'),
             graphiql: true
         }
     )));

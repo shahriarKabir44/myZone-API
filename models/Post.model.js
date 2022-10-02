@@ -10,13 +10,17 @@ module.exports = class Post {
             sql: QueryBuilder.insertQuery('post', ['body', 'posted_by', 'posted_day', 'posted_on', 'numReactions', 'numComments']),
             values: [postBody, postedBy, currentDay, currentTime, 0, 0]
         })
-        return await promisify({
+        let newPost = await promisify({
             sql: QueryBuilder.getLastInsertedRow('post')
         })
+
+        console.log(newPost)
+        return newPost
     }
     static async setPostImage(postId, postImageURLs) {
+        console.log(JSON.stringify(postImageURLs))
         return await promisify({
-            sql: `update post set attached_media=? where Id=?`,
+            sql: `update post set attached_media=? where id=?`,
             values: [(postImageURLs), postId]
         })
     }
