@@ -21,7 +21,33 @@ const FeaturedAlbumType = new GraphQLObjectType({
         Id: { type: GraphQLID },
         label: { type: GraphQLString },
         numPosts: { type: GraphQLInt },
-        initialPhoto: { type: GraphQLString }
+        initialPhoto: { type: GraphQLString },
+        createdBy: { type: GraphQLID },
+        creatorInfo: {
+            type: UserType,
+            async resolve(parent, args) {
+                let [user] = await Promisify({
+                    sql: `select * from user where Id=?;`,
+                    values: [parent.createdBy]
+                })
+                return user
+            }
+        },
+        attachedPhotos: {
+            type: new GraphQLList(GraphQLString),
+            async resolve(parent, args) {
+                let photos = await Promisify({
+                    sql: `select photoURL from featured_post
+                        where groupId = ?;`,
+                    values: [parent.Id]
+                })
+                let photoList = []
+                for (let photoObject of photos) {
+                    photoList.push(photoObject.photoURL)
+                }
+                return photoList
+            }
+        }
     })
 })
 
@@ -187,6 +213,20 @@ const RootQueryType = new GraphQLObjectType({
                     receiverId =? order by time desc limit ?,10;`,
                     values: [args.receiverId, args.pageNumber]
                 })
+            }
+        },
+        getFeaturedAlbum: {
+            type: FeaturedAlbumType,
+            args: {
+                Id: { type: GraphQLID },
+            },
+            async resolve(parent, args) {
+                let [album] = await Promisify({
+                    sql: `select * from featured_post_group where
+                        Id=?;`,
+                    values: [args.Id]
+                })
+                return album
             }
         }
     }
