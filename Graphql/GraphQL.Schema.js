@@ -13,6 +13,18 @@ const {
 } = graphql;
 
 const Promisify = require('../utils/Promisify')
+
+
+const FeaturedAlbumType = new GraphQLObjectType({
+    name: 'featured_post_group',
+    fields: () => ({
+        Id: { type: GraphQLID },
+        label: { type: GraphQLString },
+        numPosts: { type: GraphQLInt },
+        initialPhoto: { type: GraphQLString }
+    })
+})
+
 const UserType = new GraphQLObjectType({
     name: 'user',
     fields: () => ({
@@ -35,6 +47,17 @@ const UserType = new GraphQLObjectType({
                     values: [parent.Id]
                 })
             }
+        },
+        featuredAlbums: {
+            type: new GraphQLList(FeaturedAlbumType),
+            async resolve(parent, args) {
+                return Promisify({
+                    sql: `select * from featured_post_group where
+                    createdBy=?;`,
+                    values: [parent.Id]
+                })
+            }
+
         }
     })
 })

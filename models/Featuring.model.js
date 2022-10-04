@@ -28,8 +28,10 @@ module.exports = class FeaturingModel {
     }
     static async addPhotoToFeaturedAlbum({ groupId, photoURL }) {
         Promisify({
-            sql: `UPDATE myzone.featured_post_group SET numPosts = numPosts+1 WHERE Id=?;`,
-            values: [groupId]
+            sql: `UPDATE myzone.featured_post_group SET numPosts = numPosts+1,
+            initialPhoto=?
+            WHERE Id=?;`,
+            values: [groupId, photoURL]
         })
         return await Promisify({
             sql: `INSERT INTO myzone.featured_post (groupId, photoURL) VALUES (?,?);`,
