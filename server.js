@@ -34,7 +34,7 @@ function startExpress() {
     app.use('/post', require('./Routes/Post.router'))
     app.use('/postInteraction', require('./Routes/PostInteraction.router'))
     app.use('/friendship', require('./Routes/Friendship.router'))
-    app.use('/featuredAlbums', require('./Routes/Featuring.router'))
+    app.use('/featuredAlbums', validateJWT, require('./Routes/Featuring.router'))
     app.use('/conversation', validateJWT, require('./Routes/Conversation.router'))
     app.use('/notification', validateJWT, require('./Routes/Notification.router'))
     app.use('/graphql', graphqlHTTP.graphqlHTTP(req => (
