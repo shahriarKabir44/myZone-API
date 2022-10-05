@@ -7,8 +7,8 @@ InterestRouter.get('/getInterestList/:userId', function (req, res) {
             res.send({ interests: interests });
         })
 })
-InterestRouter.get('/otherInterests/:userId', function (req, res) {
-    InterestModel.otherInterests(req.params.userId)
+InterestRouter.get('/getOtherInterests/:userId', function (req, res) {
+    InterestModel.getOtherInterests(req.params.userId)
         .then(otherInterests => {
             res.send(otherInterests);
         })
