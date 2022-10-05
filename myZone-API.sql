@@ -36,15 +36,6 @@ CREATE TABLE `conversation` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `conversation`
---
-
-LOCK TABLES `conversation` WRITE;
-/*!40000 ALTER TABLE `conversation` DISABLE KEYS */;
-/*!40000 ALTER TABLE `conversation` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `featured_post`
 --
 
@@ -60,15 +51,6 @@ CREATE TABLE `featured_post` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `featured_post`
---
-
-LOCK TABLES `featured_post` WRITE;
-/*!40000 ALTER TABLE `featured_post` DISABLE KEYS */;
-/*!40000 ALTER TABLE `featured_post` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `featured_post_group`
 --
 
@@ -79,21 +61,14 @@ CREATE TABLE `featured_post_group` (
   `Id` int NOT NULL AUTO_INCREMENT,
   `label` varchar(45) NOT NULL,
   `createdBy` int NOT NULL,
-  `numPosts` int(10) unsigned zerofill DEFAULT NULL,
+  `numPosts` int(10) unsigned zerofill DEFAULT '0000000000',
+  `initialPhoto` longtext,
   PRIMARY KEY (`Id`),
+  UNIQUE KEY `label_UNIQUE` (`label`),
   KEY `featurer_idx` (`createdBy`),
   CONSTRAINT `featurer` FOREIGN KEY (`createdBy`) REFERENCES `user` (`Id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `featured_post_group`
---
-
-LOCK TABLES `featured_post_group` WRITE;
-/*!40000 ALTER TABLE `featured_post_group` DISABLE KEYS */;
-/*!40000 ALTER TABLE `featured_post_group` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `friendship`
@@ -115,15 +90,6 @@ CREATE TABLE `friendship` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `friendship`
---
-
-LOCK TABLES `friendship` WRITE;
-/*!40000 ALTER TABLE `friendship` DISABLE KEYS */;
-/*!40000 ALTER TABLE `friendship` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `group_conversation`
 --
 
@@ -140,15 +106,6 @@ CREATE TABLE `group_conversation` (
   CONSTRAINT `group_conv_creator` FOREIGN KEY (`created_by`) REFERENCES `user` (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `group_conversation`
---
-
-LOCK TABLES `group_conversation` WRITE;
-/*!40000 ALTER TABLE `group_conversation` DISABLE KEYS */;
-/*!40000 ALTER TABLE `group_conversation` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `group_conversation_members`
@@ -168,15 +125,6 @@ CREATE TABLE `group_conversation_members` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `group_conversation_members`
---
-
-LOCK TABLES `group_conversation_members` WRITE;
-/*!40000 ALTER TABLE `group_conversation_members` DISABLE KEYS */;
-/*!40000 ALTER TABLE `group_conversation_members` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `interest_names`
 --
 
@@ -185,18 +133,10 @@ DROP TABLE IF EXISTS `interest_names`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `interest_names` (
   `interest_name` varchar(45) NOT NULL,
-  PRIMARY KEY (`interest_name`)
+  PRIMARY KEY (`interest_name`),
+  UNIQUE KEY `interest_name_UNIQUE` (`interest_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `interest_names`
---
-
-LOCK TABLES `interest_names` WRITE;
-/*!40000 ALTER TABLE `interest_names` DISABLE KEYS */;
-/*!40000 ALTER TABLE `interest_names` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `message`
@@ -218,15 +158,6 @@ CREATE TABLE `message` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `message`
---
-
-LOCK TABLES `message` WRITE;
-/*!40000 ALTER TABLE `message` DISABLE KEYS */;
-/*!40000 ALTER TABLE `message` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `notification`
 --
 
@@ -244,15 +175,6 @@ CREATE TABLE `notification` (
   PRIMARY KEY (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `notification`
---
-
-LOCK TABLES `notification` WRITE;
-/*!40000 ALTER TABLE `notification` DISABLE KEYS */;
-/*!40000 ALTER TABLE `notification` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `post`
@@ -277,16 +199,6 @@ CREATE TABLE `post` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `post`
---
-
-LOCK TABLES `post` WRITE;
-/*!40000 ALTER TABLE `post` DISABLE KEYS */;
-INSERT INTO `post` VALUES (8,'d','[\"http://localhost:4000/posts/19/8/0.jpg\"]',19,'19267',1664695365624,0000000000,00000000);
-/*!40000 ALTER TABLE `post` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `post_comments`
 --
 
@@ -308,15 +220,6 @@ CREATE TABLE `post_comments` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `post_comments`
---
-
-LOCK TABLES `post_comments` WRITE;
-/*!40000 ALTER TABLE `post_comments` DISABLE KEYS */;
-/*!40000 ALTER TABLE `post_comments` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `post_reactions`
 --
 
@@ -333,15 +236,6 @@ CREATE TABLE `post_reactions` (
   CONSTRAINT `reacted_on` FOREIGN KEY (`postId`) REFERENCES `post` (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `post_reactions`
---
-
-LOCK TABLES `post_reactions` WRITE;
-/*!40000 ALTER TABLE `post_reactions` DISABLE KEYS */;
-/*!40000 ALTER TABLE `post_reactions` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `user`
@@ -366,16 +260,6 @@ CREATE TABLE `user` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `user`
---
-
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (17,'s','s',NULL,'https://www.al.com/resizer/ILBcdq1ksZC39_8hhnJ_HXsP9j0=/800x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/NSDL77J3KJFZXCK3MFWAV7HMUE.JPG',NULL,NULL,NULL,'s'),(19,'s','sa','http://localhost:4000/profileImages/19.jpg','https://www.al.com/resizer/ILBcdq1ksZC39_8hhnJ_HXsP9j0=/800x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/NSDL77J3KJFZXCK3MFWAV7HMUE.JPG',NULL,'0',NULL,'s');
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `user_interests`
 --
 
@@ -391,15 +275,6 @@ CREATE TABLE `user_interests` (
   CONSTRAINT `user` FOREIGN KEY (`userId`) REFERENCES `user` (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `user_interests`
---
-
-LOCK TABLES `user_interests` WRITE;
-/*!40000 ALTER TABLE `user_interests` DISABLE KEYS */;
-/*!40000 ALTER TABLE `user_interests` ENABLE KEYS */;
-UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -410,4 +285,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-04  1:41:50
+-- Dump completed on 2022-10-05 15:01:22

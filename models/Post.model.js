@@ -14,11 +14,9 @@ module.exports = class Post {
             sql: QueryBuilder.getLastInsertedRow('post')
         })
 
-        console.log(newPost)
         return newPost
     }
     static async setPostImage(postId, postImageURLs) {
-        console.log(JSON.stringify(postImageURLs))
         return await promisify({
             sql: `update post set attached_media=? where id=?`,
             values: [(postImageURLs), postId]

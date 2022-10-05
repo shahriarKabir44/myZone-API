@@ -33,6 +33,7 @@ function startExpress() {
     app.use('/user', require('./Routes/User.router'))
     app.use('/post', require('./Routes/Post.router'))
     app.use('/postInteraction', require('./Routes/PostInteraction.router'))
+    app.use('/interests', validateJWT, require('./Routes/Interest.router'))
     app.use('/friendship', require('./Routes/Friendship.router'))
     app.use('/featuredAlbums', validateJWT, require('./Routes/Featuring.router'))
     app.use('/conversation', validateJWT, require('./Routes/Conversation.router'))

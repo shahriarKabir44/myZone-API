@@ -5,7 +5,6 @@ const PostInteraction = require('../models/PostInteraction.model')
 PostInteractionRouter.post('/createComment', (req, res) => {
     PostInteraction.createComment(req.body)
         .then(newComment => {
-            console.log(newComment)
             res.send({ data: newComment })
         })
 })
