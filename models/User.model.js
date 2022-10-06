@@ -5,7 +5,11 @@ const defaultCoverPhoto = "https://www.al.com/resizer/ILBcdq1ksZC39_8hhnJ_HXsP9j
 module.exports = class User {
     static async filterUsers({ query, currentUserId, pageNumber }) {
         return Promisify({
-            sql: `select name,profileImage, email, Id from user where name like 
+            sql: `select name,profileImage, email, Id, 
+                (select friendship_type from friendship
+                where friend1 = 19 and friend2 = Id
+                ) as friendshipType
+                from user where name like 
                 ? or email like ? and Id!=? limit ?,10;`,
             values: [`%${query}%`, `%${query}%`, currentUserId, pageNumber]
         })
