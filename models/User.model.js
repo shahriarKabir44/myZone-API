@@ -3,6 +3,14 @@ const QueryBuilder = require('../utils/QueryBuilder')
 const defaultCoverPhoto = "https://www.al.com/resizer/ILBcdq1ksZC39_8hhnJ_HXsP9j0=/800x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/NSDL77J3KJFZXCK3MFWAV7HMUE.JPG"
 
 module.exports = class User {
+    static async searchUsersByInterest({ query }) {
+        return Promisify({
+            sql: `select Id, name, email, profileImage
+                from user where Id in (select userId from 
+                    user_interests where interestName like ?);`,
+            values: [`%${query}%`]
+        })
+    }
     static async filterUsers({ query, currentUserId, pageNumber }) {
         return Promisify({
             sql: `select name,profileImage, email, Id, 
