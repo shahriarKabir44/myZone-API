@@ -188,6 +188,20 @@ const RootQueryType = new GraphQLObjectType({
                 return post[0]
             }
         },
+        filterPost: {
+            type: new GraphQLList(PostType),
+            args: {
+                query: { type: GraphQLString },
+                pageNumber: { type: GraphQLInt }
+            },
+            resolve: async function (parent, args) {
+                return Promisify({
+                    sql: `select * from post where 
+                        body like ? limit ?,10;`,
+                    values: [`%${args.query}%`, args.pageNumber]
+                })
+            }
+        },
         findUserById: {
             type: UserType,
             args: {
