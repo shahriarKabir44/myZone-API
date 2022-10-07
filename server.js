@@ -22,7 +22,7 @@ if (cluster.isMaster) {
 
 
 function startExpress() {
-    require('./socketManagers/index')
+
 
     let app = express()
 
