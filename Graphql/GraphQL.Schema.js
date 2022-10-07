@@ -218,16 +218,19 @@ const RootQueryType = new GraphQLObjectType({
             type: new GraphQLList(NotificationType),
             args: {
                 receiverId: { type: GraphQLID },
-                pageNumber: { type: GraphQLInt }
+                pageNumber: { type: GraphQLInt },
+                groupType: { type: GraphQLInt }
             },
             async resolve(parent, args) {
                 return Promisify({
                     sql: `select * from notification where
-                    receiverId =? order by time desc limit ?,10;`,
+                    receiverId =? and ${args.groupType ? '(type = 1 or type = 2)' : '(type=3 or type =4)'} order by time desc limit ?,10;`,
                     values: [args.receiverId, args.pageNumber]
                 })
             }
         },
+
+
         getFeaturedAlbum: {
             type: FeaturedAlbumType,
             args: {
