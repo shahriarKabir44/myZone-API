@@ -21,7 +21,7 @@ module.exports = class FriendShipModel {
         })
     }
     static async getFriendshipType({ userId, friendId }) {
-        let status = Promisify({
+        let status = await Promisify({
             sql: `select friendship_type from friendship
             where friend1=? and friend2=?;`,
             values: [userId, friendId]

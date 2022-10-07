@@ -13,7 +13,10 @@ socketServer.on('connection', (socket) => {
             UserModel.setWebSocketId(userId, 1)
             socket.Id = userId
         }
-        else if (message.type == 'personalMessage' || message.type == 'notification') {
+        else if (message.type == 'personalMessage'
+            || message.type == 'notification'
+            || message.type == 'friendRequest'
+        ) {
             require('./sendWSMessage')(socketServer, message)
         }
 
