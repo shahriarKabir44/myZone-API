@@ -9,4 +9,17 @@ FriendshipRouter.get('/getFriends/:userId', validateJWT, (req, res) => {
         })
 })
 
+FriendshipRouter.post('/getFriendshipType', validateJWT, (req, res) => {
+    FriendShipModel.getFriendshipType(req.body)
+        .then(friendshipType => {
+            res.send({ friendshipType })
+        })
+})
+FriendshipRouter.post('/createFriendRequest', (req, res) => {
+    FriendShipModel.createFriendRequest(req.body)
+        .then(() => {
+            res.send({ success: true })
+        })
+})
+
 module.exports = FriendshipRouter
