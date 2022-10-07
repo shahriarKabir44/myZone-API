@@ -11,6 +11,15 @@ module.exports = class FriendShipModel {
             values: [userId]
         })
     }
+    static async cancelFriendRequest({ userId, friendId }) {
+        return Promise.all([
+            Promisify({
+                sql: `delete from friendship where (friend1=? and friend2=?) 
+                    or (friend1=? and friend2=?);`,
+                values: [userId, friendId, friendId, userId]
+            })
+        ])
+    }
     static async getActiveFriends(userId) {
         return await Promisify({
             sql: `select name,Id,profileImage from user

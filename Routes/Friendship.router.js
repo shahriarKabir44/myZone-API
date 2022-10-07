@@ -22,4 +22,11 @@ FriendshipRouter.post('/createFriendRequest', (req, res) => {
         })
 })
 
+FriendshipRouter.post('/cancelFriendRequest', (req, res) => {
+    FriendShipModel.cancelFriendRequest(req.body)
+        .then(() => {
+            res.send({ success: true })
+        })
+})
+
 module.exports = FriendshipRouter
