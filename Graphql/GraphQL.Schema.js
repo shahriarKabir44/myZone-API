@@ -224,7 +224,7 @@ const RootQueryType = new GraphQLObjectType({
             async resolve(parent, args) {
                 return Promisify({
                     sql: `select * from notification where
-                    receiverId =? and ${args.groupType ? '(type = 1 or type = 2)' : '(type=3 or type =4)'} order by time desc limit ?,10;`,
+                    receiverId =? and ${args.groupType == 0 ? '(type = 1 or type = 2)' : '(type=3 or type =4)'} order by time desc limit ?,10;`,
                     values: [args.receiverId, args.pageNumber]
                 })
             }
