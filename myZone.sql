@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: myzone
 -- ------------------------------------------------------
--- Server version	8.0.30-0ubuntu0.22.04.1
+-- Server version	8.0.30
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -125,7 +125,7 @@ CREATE TABLE `friendship` (
 
 LOCK TABLES `friendship` WRITE;
 /*!40000 ALTER TABLE `friendship` DISABLE KEYS */;
-INSERT INTO `friendship` VALUES (20,19,1,1665159817230),(19,20,1,1665159817230);
+INSERT INTO `friendship` VALUES (20,19,1,1665209432691),(19,20,1,1665209432691);
 /*!40000 ALTER TABLE `friendship` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -252,7 +252,7 @@ CREATE TABLE `notification` (
   `type` varchar(45) DEFAULT NULL,
   `isSeen` int(10) unsigned zerofill DEFAULT '0000000000',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -261,7 +261,7 @@ CREATE TABLE `notification` (
 
 LOCK TABLES `notification` WRITE;
 /*!40000 ALTER TABLE `notification` DISABLE KEYS */;
-INSERT INTO `notification` VALUES (1,20,19,'Shahriar Kabir has send you a friend request.',20,1665159285749,'3',0000000000),(2,20,19,'Shahriar Kabir has send you a friend request.',20,1665159450529,'3',0000000000),(3,19,20,'s has send you a friend request.',19,1665159506180,'3',0000000000),(4,20,19,'Shahriar Kabir has send you a friend request.',20,1665159535684,'3',0000000000),(5,20,19,'Shahriar Kabir has send you a friend request.',20,1665159587858,'3',0000000000),(6,20,19,'Shahriar Kabir has send you a friend request.',20,1665159817210,'3',0000000000);
+INSERT INTO `notification` VALUES (1,20,19,'Shahriar Kabir has send you a friend request.',20,1665159285749,'3',0000000000),(2,20,19,'Shahriar Kabir has send you a friend request.',20,1665159450529,'3',0000000000),(3,19,20,'s has send you a friend request.',19,1665159506180,'3',0000000000),(4,20,19,'Shahriar Kabir has send you a friend request.',20,1665159535684,'3',0000000000),(5,20,19,'Shahriar Kabir has send you a friend request.',20,1665159587858,'3',0000000000),(6,20,19,'Shahriar Kabir has send you a friend request.',20,1665159817210,'3',0000000000),(7,19,20,'s has send you a friend request.',19,1665209358977,'3',0000000000),(8,20,19,'Shahriar Kabir has send you a friend request.',20,1665209395142,'3',0000000000),(9,20,19,'Shahriar Kabir has send you a friend request.',20,1665209432658,'3',0000000000);
 /*!40000 ALTER TABLE `notification` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -382,7 +382,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (19,'s','sa','http://localhost:4000/profileImages/19.jpg','https://www.al.com/resizer/ILBcdq1ksZC39_8hhnJ_HXsP9j0=/800x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/NSDL77J3KJFZXCK3MFWAV7HMUE.JPG',NULL,'1',NULL,'s'),(20,'Shahriar Kabir','shahriar1234','http://localhost:4000/profileImages/20.jpg','https://www.al.com/resizer/ILBcdq1ksZC39_8hhnJ_HXsP9j0=/800x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/NSDL77J3KJFZXCK3MFWAV7HMUE.JPG',NULL,'1',NULL,'abcd');
+INSERT INTO `user` VALUES (19,'s','sa','http://localhost:4000/profileImages/19.jpg','https://www.al.com/resizer/ILBcdq1ksZC39_8hhnJ_HXsP9j0=/800x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/NSDL77J3KJFZXCK3MFWAV7HMUE.JPG',NULL,'0',NULL,'s'),(20,'Shahriar Kabir','shahriar1234','http://localhost:4000/profileImages/20.jpg','https://www.al.com/resizer/ILBcdq1ksZC39_8hhnJ_HXsP9j0=/800x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/NSDL77J3KJFZXCK3MFWAV7HMUE.JPG',NULL,'0',NULL,'abcd');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -422,4 +422,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-08  1:37:30
+-- Dump completed on 2022-10-11  2:31:06
