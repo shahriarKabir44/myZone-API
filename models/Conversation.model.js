@@ -11,6 +11,13 @@ module.exports = class ConversationModel {
         })
 
     }
+    static async getConversationInfo({ participant1, participant2 }) {
+        return Promisify({
+            sql: `select * from conversation where
+                (participant1=? and participant2=?) or (participant1=? and participant2=?);`,
+            values: [participant1, participant2, participant2, participant1]
+        })
+    }
     static async getConversationList({ userId, pageNumber }) {
         let conversations = await Promisify({
             sql: `select * from conversation where participant1=? or participant2=?

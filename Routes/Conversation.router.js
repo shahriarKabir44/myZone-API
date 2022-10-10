@@ -12,7 +12,10 @@ ConversationRoute.post('/getConversationMessages', (req, res) => {
     ConversationModel.getConversationMessages(req.body)
         .then(data => res.send({ data: data }))
 })
-
+ConversationRoute.post('/getConversationInfo', (req, res) => {
+    ConversationModel.getConversationInfo(req.body)
+        .then(conversationInfo => res.send({ conversationInfo: conversationInfo[0] }))
+})
 ConversationRoute.post('/createMessage', (req, res) => {
     ConversationModel.createMessage(req.body)
         .then(() => {
