@@ -72,4 +72,13 @@ module.exports = class FriendShipModel {
         })
 
     }
+    static async getActiveFriends({ userId }) {
+        return await Promisify({
+            sql: `select name,Id,profileImage from user
+            where user.Id in 
+            (select friend2 from friendship where friend1=?
+            and friendship_type=1) and user.websocketid=1 ; `,
+            values: [userId * 1]
+        })
+    }
 }

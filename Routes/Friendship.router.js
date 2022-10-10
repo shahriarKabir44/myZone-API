@@ -9,6 +9,13 @@ FriendshipRouter.get('/getFriends/:userId', validateJWT, (req, res) => {
         })
 })
 
+FriendshipRouter.get('/getActiveFriends/:userId', validateJWT, (req, res) => {
+    FriendShipModel.getActiveFriends(req.params)
+        .then((activeFriends) => {
+            res.send({ activeFriends })
+        })
+})
+
 FriendshipRouter.post('/getFriendshipType', validateJWT, (req, res) => {
     FriendShipModel.getFriendshipType(req.body)
         .then(friendshipType => {
