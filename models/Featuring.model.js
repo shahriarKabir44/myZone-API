@@ -30,8 +30,8 @@ module.exports = class FeaturingModel {
         try {
             Promisify({
                 sql: `UPDATE my_zone.featured_post_group SET numPosts = numPosts+1,
-            initialPhoto=?
-            WHERE Id=?;`,
+                    initialPhoto=?
+                    WHERE Id=?;`,
                 values: [photoURL, groupId]
             })
             return await Promisify({

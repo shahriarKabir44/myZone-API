@@ -249,6 +249,22 @@ const RootQueryType = new GraphQLObjectType({
                 })
                 return album
             }
+        },
+        getNewFeed: {
+            type: new GraphQLList(PostType),
+            args: {
+                userId: { type: GraphQLID },
+                pageNumber: { type: GraphQLInt }
+            },
+            resolve(parent, args) {
+                return Promisify({
+                    sql: `select * from post
+                        where post.posted_by in 
+                        (select friend2 from friendship where frind1=? and friendship_type=1 )
+                        order by posted_on desc limit?,10;`,
+                    values: [args.userId, args.pageNumber]
+                })
+            }
         }
     }
 })

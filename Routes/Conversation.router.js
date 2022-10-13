@@ -23,6 +23,13 @@ ConversationRoute.post('/createMessage', (req, res) => {
         })
 })
 
+ConversationRoute.get('/getNumUnreadMessages/:userId', (req, res) => {
+    ConversationModel.getNumUnreadMessages(req.params.userId)
+        .then(numUnreadMessages => {
+            res.send({ numUnreadMessages })
+        })
+})
+
 ConversationRoute.post('/getConversationList', (req, res) => {
     ConversationModel.getConversationList(req.body)
         .then(conversationList => {

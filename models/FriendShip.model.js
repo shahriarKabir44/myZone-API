@@ -39,6 +39,11 @@ module.exports = class FriendShipModel {
     }
     static async createFriendRequest({ userId, friendId }) {
         const now = (new Date()) * 1
+        Promisify({
+            sql: `update user set numNewFriendRequests= numNewFriendRequests+1
+                where Id=?;`,
+            values: [friendId]
+        })
         return await Promise.all([
             Promisify({
                 sql: `insert into friendship(friend1,friend2,friendship_type,initiation_time)
@@ -53,6 +58,7 @@ module.exports = class FriendShipModel {
         ])
     }
     static async updateFriendshipCount(friend1, friend2, actionType) {
+        console.log(friend1, friend2, actionType)
         return await Promisify({
             sql: `update user set numFriends= numFriends ${actionType} where
                 (Id=?) or (Id=?);`,

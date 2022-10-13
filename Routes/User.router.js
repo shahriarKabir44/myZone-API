@@ -38,6 +38,14 @@ UserRouter.post('/isAuthorized', validateJWT, (req, res) => {
 })
 UserRouter.post('/getNumMissedNotifications', (req, res) => {
     UserModel.getNumMissedNotifications(req.body)
+        .then(numMissedNotifications => {
+            res.send({
+                numMissedNotifications
+            })
+        })
+})
+UserRouter.post('/getNumMissedNotifications', (req, res) => {
+    UserModel.getNumMissedNotifications(req.body)
         .then(missedNotifications => {
             res.send({ missedNotifications })
         })

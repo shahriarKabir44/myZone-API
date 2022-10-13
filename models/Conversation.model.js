@@ -11,6 +11,19 @@ module.exports = class ConversationModel {
         })
 
     }
+    static async getNumUnreadMessages({ userId }) {
+        try {
+            let [{ numUnreadMessages }] = Promisify({
+                sql: `select count(*) as numUnreadMessages from conversation where
+                receiver=? and isSeen=0;`,
+                values: [userId]
+            })
+            return numUnreadMessages
+        } catch (error) {
+            return 0
+        }
+
+    }
     static async getConversationInfo({ participant1, participant2 }) {
         return Promisify({
             sql: `select * from conversation where
