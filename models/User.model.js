@@ -1,6 +1,6 @@
 const Promisify = require('../utils/Promisify')
 const QueryBuilder = require('../utils/QueryBuilder')
-const defaultCoverPhoto = "https://www.al.com/resizer/ILBcdq1ksZC39_8hhnJ_HXsP9j0=/800x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/NSDL77J3KJFZXCK3MFWAV7HMUE.JPG"
+const defaultCoverPhoto = "/stockCoverPhoto.jpg"
 
 module.exports = class User {
     static async searchUsersByInterest({ query, userId }) {

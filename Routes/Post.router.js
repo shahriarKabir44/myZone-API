@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
     },
     filename: (req, res, cb) => {
         const { postedby, postid, index } = req.headers
-        req.postDir = `http://localhost:4000/posts/${postedby}/${postid}/${index}.jpg`
+        req.postDir = `/posts/${postedby}/${postid}/${index}.jpg`
         cb(null, `${index}.jpg`)
     }
 })

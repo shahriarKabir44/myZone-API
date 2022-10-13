@@ -27,7 +27,7 @@ const upload = multer({ storage })
 
 UserRouter.post('/setProfileImage', upload.single('file'), (req, res) => {
     let { id } = req.headers
-    res.send({ data: `http://localhost:4000/profileImages/${id}.jpg` })
+    res.send({ data: `/profileImages/${id}.jpg` })
 
 })
 
@@ -40,7 +40,8 @@ UserRouter.post('/getNumMissedNotifications', (req, res) => {
     UserModel.getNumMissedNotifications(req.body)
         .then(numMissedNotifications => {
             res.send({
-                numMissedNotifications
+                numMissedNotifications:
+                    numMissedNotifications[0]
             })
         })
 })
