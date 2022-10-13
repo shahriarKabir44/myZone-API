@@ -65,9 +65,16 @@ module.exports = class FriendShipModel {
             values: [friend1, friend2]
         })
     }
+    static async updateNumUnreadFriendReqest(userId) {
+        return Promisify({
+            sql: `update user set numNewFriendRequests=numNewFriendRequests+1
+                where Id=?;`,
+            values: [userId]
+        })
+    }
     static async removeFriendshipRecord({ friend1, friend2 }) {
         const [{ friendship_type }] = await Promisify({
-            sql: `select friendship_type from friend where
+            sql: `select friendship_type from friendship where
                 friend1=? and friend2=?;`,
             values: [friend1, friend2]
         })
@@ -83,10 +90,11 @@ module.exports = class FriendShipModel {
             })
         ])
     }
-    static async accept({ friend1, friend2 }) {
+    static async accept({ friend1, friend2 }, currentUserId) {
         this.updateFriendshipCount(friend1, friend2, '+1')
+        this.updateNumUnreadFriendReqest(friend1 == currentUserId ? friend2 : friend1)
         return Promisify({
-            sql: `update friendship set friendship_type=1 
+            sql: `update friendship set friendship_type=1 where
                    (friend1=? and friend2=?) 
                     or (friend1=? and friend2=?);`,
             values: [friend1 * 1, friend2 * 1, friend2 * 1, friend1 * 1]

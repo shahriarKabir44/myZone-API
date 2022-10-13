@@ -37,7 +37,8 @@ FriendshipRouter.post('/cancelFriendRequest', (req, res) => {
 })
 
 FriendshipRouter.post('/accept', (req, res) => {
-    FriendShipModel.accept(req.body)
+    console.log(req.user)
+    FriendShipModel.accept(req.body, req.user.Id)
         .then(() => res.send({ success: true }))
 })
 FriendshipRouter.post('/removeFriendshipRecord', (req, res) => {
