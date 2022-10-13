@@ -1,5 +1,4 @@
 const Promisify = require('../utils/Promisify')
-const QueryBuilder = require('../utils/QueryBuilder')
 
 module.exports = class FriendShipModel {
     static async getFriends(userId) {
@@ -53,7 +52,22 @@ module.exports = class FriendShipModel {
             })
         ])
     }
+    static async updateFriendshipCount(friend1, friend2, actionType) {
+        return await Promisify({
+            sql: `update user set numFriends= numFriends ${actionType} where
+                (Id=?) or (Id=?);`,
+            values: [friend1, friend2]
+        })
+    }
     static async removeFriendshipRecord({ friend1, friend2 }) {
+        const [{ friendship_type }] = await Promisify({
+            sql: `select friendship_type from friend where
+                friend1=? and friend2=?;`,
+            values: [friend1, friend2]
+        })
+        if (friendship_type == 1) {
+            this.updateFriendshipCount(friend1, friend2, '-1')
+        }
         return await Promise.all([
             Promisify({
                 sql: `delete from friendship where 
@@ -64,6 +78,7 @@ module.exports = class FriendShipModel {
         ])
     }
     static async accept({ friend1, friend2 }) {
+        this.updateFriendshipCount(friend1, friend2, '+1')
         return Promisify({
             sql: `update friendship set friendship_type=1 
                    (friend1=? and friend2=?) 

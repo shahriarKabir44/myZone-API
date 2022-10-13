@@ -41,15 +41,15 @@ module.exports = class ConversationModel {
             values: [Id]
         })
     }
-    static async createMessage({ conversationId, sender, body, time }) {
+    static async createMessage({ conversationId, sender, body, time, receiver }) {
         Promisify({
             sql: QueryBuilder.insertQuery('message', ['conversationId', 'sender', 'body', 'time']),
             values: [conversationId, sender, body, time]
         })
         Promisify({
             sql: `update conversation set 
-                time=?, last_message=? where Id=?;`,
-            values: [time, body, conversationId]
+                time=?,receiver=?,isSeen=0, last_message=?,  where Id=?;`,
+            values: [time, body, receiver, conversationId]
         })
 
 
@@ -60,8 +60,8 @@ module.exports = class ConversationModel {
             return previouslyCreatedRow
         }
         await Promisify({
-            sql: QueryBuilder.insertQuery('conversation', ['participant1', 'participant2', 'last_message', 'time', 'is_group_conversation']),
-            values: [participant1, participant2, null, (new Date()) * 1, 0]
+            sql: QueryBuilder.insertQuery('conversation', ['participant1', 'participant2', 'last_message', 'time', 'is_group_conversation', 'receiver', 'isSeen']),
+            values: [participant1, participant2, null, (new Date()) * 1, 0, -1, 0]
         })
         return await ConversationModel.find(participant1, participant2)
     }

@@ -36,7 +36,12 @@ UserRouter.post('/isAuthorized', validateJWT, (req, res) => {
         user: req.user
     })
 })
-
+UserRouter.post('/getNumMissedNotifications', (req, res) => {
+    UserModel.getNumMissedNotifications(req.body)
+        .then(missedNotifications => {
+            res.send({ missedNotifications })
+        })
+})
 UserRouter.post('/login', (req, res) => {
     let { email, password } = req.body
     UserModel.login(email, password)

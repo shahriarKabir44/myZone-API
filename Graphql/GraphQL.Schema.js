@@ -222,6 +222,11 @@ const RootQueryType = new GraphQLObjectType({
                 groupType: { type: GraphQLInt }
             },
             async resolve(parent, args) {
+                Promisify({
+                    sql: `update user set ${args.groupType == 0 ? 'numUnseenNotification' : 'numNewFriendRequests'}=0
+                        where Id=?;`,
+                    values: [args.receiverId]
+                })
                 return Promisify({
                     sql: `select * from notification where
                     receiverId =? and ${args.groupType == 0 ? '(type = 1 or type = 2)' : '(type=3 or type =4)'} order by time desc limit ?,10;`,

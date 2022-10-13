@@ -14,6 +14,13 @@ module.exports = class User {
             values: [userId, `%${query}%`]
         })
     }
+    static async getNumMissedNotifications({ userId }) {
+        return Promisify({
+            sql: `select numUnseenNotification,numNewFriendRequests,numUnseenMessages
+                from user where Id=?;`,
+            values: [userId]
+        })
+    }
     static async filterUsers({ query, currentUserId, pageNumber }) {
         return Promisify({
             sql: `select name,profileImage, email, Id, 
