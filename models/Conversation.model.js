@@ -66,6 +66,16 @@ module.exports = class ConversationModel {
         return await ConversationModel.find(participant1, participant2)
     }
     static async getConversationMessages({ conversationId, pageNumber }) {
+        Promisify({
+            sql: `update user set numUnseenMessages=numUnseenMessages-1
+                where Id=?;`,
+            values: [req.user.Id]
+        })
+        Promisify({
+            sql: `update conversation set isSeen=1
+                where Id=?;`,
+            values: [conversationId]
+        })
         let messages = await Promisify({
             sql: `select * from message 
                 where conversationId = ? order by time desc limit ?,20;`,

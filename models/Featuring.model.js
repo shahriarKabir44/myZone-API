@@ -3,7 +3,7 @@ const Promisify = require('../utils/Promisify')
 module.exports = class FeaturingModel {
     static async getFeaturedAlbums({ createdBy, selectedImgURL }) {
         return await Promisify({
-            sql: `SELECT * FROM myzone.featured_post_group
+            sql: `SELECT * FROM my_zone.featured_post_group
                     as grp
                     where createdBy = ? and ? not in (select photoURL from 
                     featured_post where groupId = grp.Id);`,
@@ -13,7 +13,7 @@ module.exports = class FeaturingModel {
     static async createFeaturedAlbum({ label, createdBy }) {
         try {
             await Promisify({
-                sql: `INSERT INTO myzone.featured_post_group (label, createdBy) VALUES (?,?);`,
+                sql: `INSERT INTO my_zone.featured_post_group (label, createdBy) VALUES (?,?);`,
                 values: [label, createdBy]
             })
         } catch (error) {
@@ -21,20 +21,20 @@ module.exports = class FeaturingModel {
         }
 
         let [newAlbum] = await Promisify({
-            sql: `SELECT * FROM myzone.featured_post_group where createdBy=? and label=?;`,
+            sql: `SELECT * FROM my_zone.featured_post_group where createdBy=? and label=?;`,
             values: [createdBy, label]
         })
         return newAlbum
     }
     static async addPhotoToFeaturedAlbum({ groupId, photoURL }) {
         Promisify({
-            sql: `UPDATE myzone.featured_post_group SET numPosts = numPosts+1,
+            sql: `UPDATE my_zone.featured_post_group SET numPosts = numPosts+1,
             initialPhoto=?
             WHERE Id=?;`,
-            values: [groupId, photoURL]
+            values: [photoURL, groupId]
         })
         return await Promisify({
-            sql: `INSERT INTO myzone.featured_post (groupId, photoURL) VALUES (?,?);`,
+            sql: `INSERT INTO my_zone.featured_post (groupId, photoURL) VALUES (?,?);`,
             values: [groupId, photoURL]
         })
     }
