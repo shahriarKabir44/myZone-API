@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.29, for Linux (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.31, for Win64 (x86_64)
 --
--- Host: localhost    Database: myzone
+-- Host: localhost    Database: my_zone
 -- ------------------------------------------------------
--- Server version	8.0.30
+-- Server version	8.0.31
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -29,6 +29,8 @@ CREATE TABLE `conversation` (
   `last_message` longtext,
   `time` bigint DEFAULT NULL,
   `is_group_conversation` int NOT NULL,
+  `receiver` int NOT NULL,
+  `isSeen` int(10) unsigned zerofill DEFAULT '0000000000',
   PRIMARY KEY (`Id`),
   KEY `sender_idx` (`participant2`),
   CONSTRAINT `sender` FOREIGN KEY (`participant2`) REFERENCES `user` (`Id`)
@@ -41,7 +43,6 @@ CREATE TABLE `conversation` (
 
 LOCK TABLES `conversation` WRITE;
 /*!40000 ALTER TABLE `conversation` DISABLE KEYS */;
-INSERT INTO `conversation` VALUES (1,20,19,'hi',1665166898117,0);
 /*!40000 ALTER TABLE `conversation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -53,8 +54,9 @@ DROP TABLE IF EXISTS `featured_post`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `featured_post` (
-  `photoURL` longtext NOT NULL,
+  `photoURL` varchar(75) NOT NULL,
   `groupId` int NOT NULL,
+  UNIQUE KEY `unique_group` (`groupId`,`photoURL`),
   KEY `featured_group_idx` (`groupId`),
   CONSTRAINT `featured_group` FOREIGN KEY (`groupId`) REFERENCES `featured_post_group` (`Id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -66,7 +68,7 @@ CREATE TABLE `featured_post` (
 
 LOCK TABLES `featured_post` WRITE;
 /*!40000 ALTER TABLE `featured_post` DISABLE KEYS */;
-INSERT INTO `featured_post` VALUES ('http://localhost:4000/posts/19/8/0.jpg',1);
+INSERT INTO `featured_post` VALUES ('http://localhost:4000/posts/21/9/1.jpg',6);
 /*!40000 ALTER TABLE `featured_post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -84,10 +86,9 @@ CREATE TABLE `featured_post_group` (
   `numPosts` int(10) unsigned zerofill DEFAULT '0000000000',
   `initialPhoto` longtext,
   PRIMARY KEY (`Id`),
-  UNIQUE KEY `label_UNIQUE` (`label`),
   KEY `featurer_idx` (`createdBy`),
   CONSTRAINT `featurer` FOREIGN KEY (`createdBy`) REFERENCES `user` (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,7 +97,7 @@ CREATE TABLE `featured_post_group` (
 
 LOCK TABLES `featured_post_group` WRITE;
 /*!40000 ALTER TABLE `featured_post_group` DISABLE KEYS */;
-INSERT INTO `featured_post_group` VALUES (1,'food',19,0000000002,'http://localhost:4000/posts/19/8/0.jpg');
+INSERT INTO `featured_post_group` VALUES (6,'food',21,0000000001,'http://localhost:4000/posts/21/9/1.jpg');
 /*!40000 ALTER TABLE `featured_post_group` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -202,7 +203,7 @@ CREATE TABLE `interest_names` (
 
 LOCK TABLES `interest_names` WRITE;
 /*!40000 ALTER TABLE `interest_names` DISABLE KEYS */;
-INSERT INTO `interest_names` VALUES ('food');
+INSERT INTO `interest_names` VALUES ('food'),('games');
 /*!40000 ALTER TABLE `interest_names` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -231,7 +232,6 @@ CREATE TABLE `message` (
 
 LOCK TABLES `message` WRITE;
 /*!40000 ALTER TABLE `message` DISABLE KEYS */;
-INSERT INTO `message` VALUES (1,19,'hello',1665160470225),(1,20,'hi',1665160576342),(1,19,'howdy!',1665160603583),(1,19,'yo',1665163381204),(1,20,'hi',1665163755788),(1,20,'hello',1665163811421),(1,19,'hi there',1665164167495),(1,20,'hello',1665164209431),(1,19,'hi',1665164260892),(1,20,'hi',1665164426935),(1,20,'hi',1665164524335),(1,19,'hello',1665164536510),(1,19,'hello',1665164908812),(1,19,'hi',1665164945163),(1,19,'what',1665164997064),(1,19,'good day',1665165067203),(1,19,'hello',1665166772067),(1,19,'howdy',1665166824915),(1,19,'hi',1665166898117);
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -284,7 +284,7 @@ CREATE TABLE `post` (
   PRIMARY KEY (`Id`),
   KEY `postedby_idx` (`posted_by`),
   CONSTRAINT `postedby` FOREIGN KEY (`posted_by`) REFERENCES `user` (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -293,7 +293,7 @@ CREATE TABLE `post` (
 
 LOCK TABLES `post` WRITE;
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
-INSERT INTO `post` VALUES (8,'abcdewoi dogs ','[\"http://localhost:4000/posts/19/8/0.jpg\"]',19,'19267',1664695365624,0000000000,00000000);
+INSERT INTO `post` VALUES (8,'abcdewoi dogs ','[\"http://localhost:4000/posts/19/8/0.jpg\"]',19,'19267',1664695365624,0000000000,00000000),(9,'food','[\"http://localhost:4000/posts/21/9/1.jpg\",\"http://localhost:4000/posts/21/9/0.jpg\"]',21,'19278',1665680981694,0000000000,00000000);
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -369,11 +369,13 @@ CREATE TABLE `user` (
   `coverPhoto` longtext,
   `numFriends` int(10) unsigned zerofill DEFAULT NULL,
   `websocketid` varchar(70) DEFAULT NULL,
-  `serviceworker_id` varchar(70) DEFAULT NULL,
   `password` varchar(45) NOT NULL,
+  `numUnseenNotification` int(10) unsigned zerofill DEFAULT '0000000000',
+  `numNewFriendRequests` int(10) unsigned zerofill DEFAULT '0000000000',
+  `numUnseenMessages` int(10) unsigned zerofill DEFAULT '0000000000',
   PRIMARY KEY (`Id`),
   UNIQUE KEY `email_UNIQUE` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -382,7 +384,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (19,'s','sa','http://localhost:4000/profileImages/19.jpg','https://www.al.com/resizer/ILBcdq1ksZC39_8hhnJ_HXsP9j0=/800x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/NSDL77J3KJFZXCK3MFWAV7HMUE.JPG',NULL,'0',NULL,'s'),(20,'Shahriar Kabir','shahriar1234','http://localhost:4000/profileImages/20.jpg','https://www.al.com/resizer/ILBcdq1ksZC39_8hhnJ_HXsP9j0=/800x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/NSDL77J3KJFZXCK3MFWAV7HMUE.JPG',NULL,'0',NULL,'abcd');
+INSERT INTO `user` VALUES (19,'s','sa','http://localhost:4000/profileImages/19.jpg','https://www.al.com/resizer/ILBcdq1ksZC39_8hhnJ_HXsP9j0=/800x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/NSDL77J3KJFZXCK3MFWAV7HMUE.JPG',NULL,'0','s',0000000000,0000000000,0000000000),(20,'Shahriar Kabir','shahriar1234','http://localhost:4000/profileImages/20.jpg','https://www.al.com/resizer/ILBcdq1ksZC39_8hhnJ_HXsP9j0=/800x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/NSDL77J3KJFZXCK3MFWAV7HMUE.JPG',NULL,'0','abcd',0000000000,0000000000,0000000000),(21,'shahriar kabir','shahriar kabir','http://localhost:4000/profileImages/21.jpg','https://www.al.com/resizer/ILBcdq1ksZC39_8hhnJ_HXsP9j0=/800x0/smart/cloudfront-us-east-1.images.arcpublishing.com/advancelocal/NSDL77J3KJFZXCK3MFWAV7HMUE.JPG',NULL,'1','abc',0000000000,0000000000,0000000000);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -396,6 +398,7 @@ DROP TABLE IF EXISTS `user_interests`;
 CREATE TABLE `user_interests` (
   `userId` int NOT NULL,
   `interestName` varchar(45) NOT NULL,
+  UNIQUE KEY `unique_index` (`userId`,`interestName`),
   KEY `user_idx` (`userId`),
   KEY `interest_name_idx` (`interestName`),
   CONSTRAINT `interest_name` FOREIGN KEY (`interestName`) REFERENCES `interest_names` (`interest_name`),
@@ -409,7 +412,7 @@ CREATE TABLE `user_interests` (
 
 LOCK TABLES `user_interests` WRITE;
 /*!40000 ALTER TABLE `user_interests` DISABLE KEYS */;
-INSERT INTO `user_interests` VALUES (19,'food');
+INSERT INTO `user_interests` VALUES (21,'food');
 /*!40000 ALTER TABLE `user_interests` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -422,4 +425,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-11  2:31:06
+-- Dump completed on 2022-10-14  0:58:59

@@ -19,6 +19,16 @@ module.exports = class InterestModel {
         })
     }
     static async addInterest({ userId, interestName }) {
+        try {
+            return Promisify({
+                sql: `insert into user_interests
+                (userId, interestName)
+                values (?,?)`,
+                values: [userId, interestName]
+            })
+        } catch (error) {
+
+        }
         return Promisify({
             sql: `insert into user_interests
                 (userId, interestName)

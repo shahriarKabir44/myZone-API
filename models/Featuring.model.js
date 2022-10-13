@@ -27,16 +27,21 @@ module.exports = class FeaturingModel {
         return newAlbum
     }
     static async addPhotoToFeaturedAlbum({ groupId, photoURL }) {
-        Promisify({
-            sql: `UPDATE my_zone.featured_post_group SET numPosts = numPosts+1,
+        try {
+            Promisify({
+                sql: `UPDATE my_zone.featured_post_group SET numPosts = numPosts+1,
             initialPhoto=?
             WHERE Id=?;`,
-            values: [photoURL, groupId]
-        })
-        return await Promisify({
-            sql: `INSERT INTO my_zone.featured_post (groupId, photoURL) VALUES (?,?);`,
-            values: [groupId, photoURL]
-        })
+                values: [photoURL, groupId]
+            })
+            return await Promisify({
+                sql: `INSERT INTO my_zone.featured_post (groupId, photoURL) VALUES (?,?);`,
+                values: [groupId, photoURL]
+            })
+        } catch (error) {
+
+        }
+
     }
     static async removePhotoFromFeaturedAlbum(albumName, photo) { }
 }
