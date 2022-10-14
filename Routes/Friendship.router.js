@@ -50,4 +50,10 @@ FriendshipRouter.post('/getMutualFriends', (req, res) => {
             res.send({ mutualFriends })
         })
 })
+FriendshipRouter.post('/countMutualFriends', (req, res) => {
+    FriendShipModel.countMutualFriends(req.body)
+        .then(numMutualFriends => {
+            res.send({ numMutualFriends })
+        })
+})
 module.exports = FriendshipRouter

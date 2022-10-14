@@ -122,11 +122,12 @@ module.exports = class FriendShipModel {
 
         return userFriends
     }
-    static async countMutualFriends(friend1, friend2) {
+    static async countMutualFriends({ friend1, friend2 }) {
         let [{ numMutualFriends }] = await Promisify({
-            sql: `select count(*) as numMutualFriends from ( select friend2 from friendship where friend1=? and friend2!=?
-                union select friend2 from friendship where friend1=? and friend2!=? ) as mutualFriends;`,
-            values: [friend1, friend2, friend2, friend1],
+            sql: `select count(*) as numMutualFriends from ( select Id from user where Id in (
+                    select friend2 from friendship where friend1=?
+                ) and Id in (select friend2 from friendship where friend1=?) ) as mutualFriends;`,
+            values: [friend1, friend2],
         })
         return numMutualFriends
     }
