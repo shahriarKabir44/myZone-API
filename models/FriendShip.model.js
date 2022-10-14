@@ -57,7 +57,6 @@ module.exports = class FriendShipModel {
         ])
     }
     static async updateFriendshipCount(friend1, friend2, actionType) {
-        console.log(friend1, friend2, actionType)
         return await Promisify({
             sql: `update user set numFriends= numFriends ${actionType} where
                 (Id=?) or (Id=?);`,
@@ -108,5 +107,27 @@ module.exports = class FriendShipModel {
             and friendship_type=1) and user.websocketid=1 ; `,
             values: [userId * 1]
         })
+    }
+
+
+    static async getMutualFriends({ userId }) {
+        let userFriends = await Promisify({
+            sql: `select name,Id,profileImage,email from user where 
+                    user.Id in (select friend2 from friendship where friend1 in (
+                        select friend2 from friendship where friend1=?
+                    ) ) and user.Id not in (select friend2 from friendship where friend1=?) 
+                    and user.Id!=? ;`,
+            values: [userId, userId, userId]
+        })
+
+        return userFriends
+    }
+    static async countMutualFriends(friend1, friend2) {
+        let [{ numMutualFriends }] = await Promisify({
+            sql: `select count(*) as numMutualFriends from ( select friend2 from friendship where friend1=? and friend2!=?
+                union select friend2 from friendship where friend1=? and friend2!=? ) as mutualFriends;`,
+            values: [friend1, friend2, friend2, friend1],
+        })
+        return numMutualFriends
     }
 }

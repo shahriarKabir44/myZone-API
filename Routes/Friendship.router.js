@@ -44,5 +44,10 @@ FriendshipRouter.post('/removeFriendshipRecord', (req, res) => {
     FriendShipModel.removeFriendshipRecord(req.body)
         .then(() => res.send({ success: true }))
 })
-
+FriendshipRouter.post('/getMutualFriends', (req, res) => {
+    FriendShipModel.getMutualFriends(req.body)
+        .then(mutualFriends => {
+            res.send({ mutualFriends })
+        })
+})
 module.exports = FriendshipRouter
