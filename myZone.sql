@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `my_zone` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `my_zone`;
 -- MySQL dump 10.13  Distrib 8.0.31, for Win64 (x86_64)
 --
 -- Host: localhost    Database: my_zone
@@ -34,7 +36,7 @@ CREATE TABLE `conversation` (
   PRIMARY KEY (`Id`),
   KEY `sender_idx` (`participant2`),
   CONSTRAINT `sender` FOREIGN KEY (`participant2`) REFERENCES `user` (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,6 +45,7 @@ CREATE TABLE `conversation` (
 
 LOCK TABLES `conversation` WRITE;
 /*!40000 ALTER TABLE `conversation` DISABLE KEYS */;
+INSERT INTO `conversation` VALUES (2,21,19,'hi bro',1665758245760,0,21,0000000000),(3,19,22,'hey',1665752769009,0,22,0000000001);
 /*!40000 ALTER TABLE `conversation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -126,7 +129,7 @@ CREATE TABLE `friendship` (
 
 LOCK TABLES `friendship` WRITE;
 /*!40000 ALTER TABLE `friendship` DISABLE KEYS */;
-INSERT INTO `friendship` VALUES (20,19,1,1665209432691),(19,20,1,1665209432691),(22,21,2,1665691876597),(21,22,3,1665691876597);
+INSERT INTO `friendship` VALUES (21,19,1,1665747563859),(19,21,1,1665747563859),(19,22,1,1665747679790),(22,19,1,1665747679790);
 /*!40000 ALTER TABLE `friendship` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -232,6 +235,7 @@ CREATE TABLE `message` (
 
 LOCK TABLES `message` WRITE;
 /*!40000 ALTER TABLE `message` DISABLE KEYS */;
+INSERT INTO `message` VALUES (2,21,'hello',1665705629736),(2,21,'hi',1665705631841),(2,19,'hi',1665706063088),(2,21,'hi',1665734228739),(2,21,'hello',1665734238027),(2,21,'good day',1665734279474),(2,21,'hi',1665734306418),(2,21,'hello',1665734423315),(2,21,'good day',1665734455068),(2,21,'yo',1665734552203),(2,21,'hello',1665735359098),(2,21,'morning',1665735876486),(2,21,'hi',1665735902766),(2,21,'nice day',1665735926846),(2,21,'hiii',1665735952051),(2,21,'hi',1665736202242),(2,21,'hi',1665736247914),(2,21,'morning!',1665736272475),(2,21,'good day',1665736294730),(2,21,'hi',1665736366227),(2,21,'good day',1665736373227),(2,21,'hi',1665736417363),(2,21,'nice day',1665736442899),(2,21,'good',1665736488640),(3,22,'hi',1665747814090),(3,19,'hello',1665747828708),(3,22,'good dat',1665747876835),(3,22,'hi there',1665747962059),(3,19,'hi',1665748030141),(3,22,'hello',1665748039023),(3,19,'good day',1665748049413),(3,22,'nice',1665748067851),(2,19,'hi',1665749248075),(3,22,'hi',1665749791308),(2,19,'good day',1665749801660),(3,19,'good day',1665749849268),(3,19,'hi',1665749945530),(3,19,'hi',1665752198694),(3,22,'good day',1665752223652),(3,19,'howdy',1665752336717),(3,22,'hi',1665752644921),(3,19,'hi',1665752747372),(3,22,'hello',1665752755879),(3,19,'hey',1665752769009),(2,21,'hi',1665757949178),(2,19,'hello',1665757962152),(2,21,'howdy',1665757992056),(2,19,'hi',1665758007450),(2,21,'good day',1665758017583),(2,19,'hi bro',1665758245760);
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -252,7 +256,7 @@ CREATE TABLE `notification` (
   `type` varchar(45) DEFAULT NULL,
   `isSeen` int(10) unsigned zerofill DEFAULT '0000000000',
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -261,7 +265,7 @@ CREATE TABLE `notification` (
 
 LOCK TABLES `notification` WRITE;
 /*!40000 ALTER TABLE `notification` DISABLE KEYS */;
-INSERT INTO `notification` VALUES (1,20,19,'Shahriar Kabir has send you a friend request.',20,1665159285749,'3',0000000000),(2,20,19,'Shahriar Kabir has send you a friend request.',20,1665159450529,'3',0000000000),(3,19,20,'s has send you a friend request.',19,1665159506180,'3',0000000000),(4,20,19,'Shahriar Kabir has send you a friend request.',20,1665159535684,'3',0000000000),(5,20,19,'Shahriar Kabir has send you a friend request.',20,1665159587858,'3',0000000000),(6,20,19,'Shahriar Kabir has send you a friend request.',20,1665159817210,'3',0000000000),(7,19,20,'s has send you a friend request.',19,1665209358977,'3',0000000000),(8,20,19,'Shahriar Kabir has send you a friend request.',20,1665209395142,'3',0000000000),(9,20,19,'Shahriar Kabir has send you a friend request.',20,1665209432658,'3',0000000000),(10,22,21,'Rahul Islam has send you a friend request.',22,1665689860580,'3',0000000000),(11,22,21,'Rahul Islam has send you a friend request.',22,1665690084622,'3',0000000000),(12,22,21,'Rahul Islam has send you a friend request.',22,1665690139657,'3',0000000000),(13,22,21,'Rahul Islam has send you a friend request.',22,1665690842624,'3',0000000000),(14,22,21,'Rahul Islam has send you a friend request.',22,1665690917408,'3',0000000000),(15,22,21,'Rahul Islam has send you a friend request.',22,1665691876582,'3',0000000000);
+INSERT INTO `notification` VALUES (20,19,21,'s has send you a friend request.',19,1665702734187,'3',0000000000),(21,21,19,'shahriar kabir has accepted request.',21,1665702740690,'3',0000000000),(22,19,21,'s has send you a friend request.',19,1665703127849,'3',0000000000),(23,21,19,'shahriar kabir has accepted your friend request.',21,1665703136912,'3',0000000000),(24,21,19,'shahriar kabir has accepted your friend request.',21,1665703214629,'3',0000000000),(25,21,19,'shahriar kabir has send you a friend request.',21,1665747563836,'3',0000000000),(26,19,21,'s has accepted your friend request.',19,1665747576541,'3',0000000000),(27,19,22,'s has send you a friend request.',19,1665747679783,'3',0000000000),(28,22,19,'Rahul Islam has accepted your friend request.',22,1665747700968,'3',0000000000);
 /*!40000 ALTER TABLE `notification` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -367,7 +371,7 @@ CREATE TABLE `user` (
   `email` varchar(45) NOT NULL,
   `profileImage` longtext,
   `coverPhoto` longtext,
-  `numFriends` int(10) unsigned zerofill DEFAULT NULL,
+  `numFriends` int(10) unsigned zerofill DEFAULT '0000000000',
   `websocketid` varchar(70) DEFAULT NULL,
   `password` varchar(45) NOT NULL,
   `numUnseenNotification` int(10) unsigned zerofill DEFAULT '0000000000',
@@ -384,7 +388,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (19,'s','sa','/profileImages/19.jpg','/stockCoverPhoto.jpg',NULL,'1','s',0000000000,0000000000,0000000000),(20,'Shahriar Kabir','shahriar1234','/profileImages/20.jpg','/stockCoverPhoto.jpg',NULL,'0','abcd',0000000000,0000000000,0000000000),(21,'shahriar kabir','shahriar kabir','/profileImages/21.jpg','/stockCoverPhoto.jpg',NULL,'1','abc',0000000000,0000000001,0000000000),(22,'Rahul Islam','rahul','/profileImages/22.jpg','/stockCoverPhoto.jpg',NULL,'0','abcd',0000000000,0000000000,0000000000);
+INSERT INTO `user` VALUES (19,'s','sa','/profileImages/19.jpg','/stockCoverPhoto.jpg',0000000002,'1','s',0000000000,0000000000,0000000000),(20,'Shahriar Kabir','shahriar1234','/profileImages/20.jpg','/stockCoverPhoto.jpg',0000000000,'0','abcd',0000000000,0000000000,0000000000),(21,'shahriar kabir','shahriar kabir','/profileImages/21.jpg','/stockCoverPhoto.jpg',0000000001,'1','abc',0000000000,0000000000,0000000000),(22,'Rahul Islam','rahul','/profileImages/22.jpg','/stockCoverPhoto.jpg',0000000001,'1','abcd',0000000000,0000000000,0000000000);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -425,4 +429,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-14  4:26:06
+-- Dump completed on 2022-10-14 20:39:21
