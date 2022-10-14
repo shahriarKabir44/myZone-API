@@ -131,4 +131,14 @@ module.exports = class FriendShipModel {
         })
         return numMutualFriends
     }
+    static async findUsersWithCommonInterests({ userId }) {
+        return await Promisify({
+            sql: `select name,profileImage, Id from user
+                where user.Id in (select userId from user_interests where interestName in (
+                    select interestName from user_interests 
+                    where userId=?
+                ) ) and user.Id!=?;`,
+            values: [userId, userId],
+        })
+    }
 }
