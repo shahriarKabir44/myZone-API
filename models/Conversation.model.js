@@ -61,7 +61,7 @@ module.exports = class ConversationModel {
         })
         Promisify({
             sql: `update conversation set 
-                time=?,receiver=?,isSeen=0, last_message=?,  where Id=?;`,
+                time=?,receiver=?,isSeen=0, last_message=?  where Id=?;`,
             values: [time, body, receiver, conversationId]
         })
 
