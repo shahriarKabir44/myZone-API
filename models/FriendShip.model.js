@@ -3,10 +3,9 @@ const Promisify = require('../utils/Promisify')
 module.exports = class FriendShipModel {
     static async getFriends(userId) {
         return await Promisify({
-            sql: `select name,Id,profileImage from user
-            where user.Id in 
-            (select friend2 from friendship where friend1=?
-            and friendship_type=1); `,
+            sql: `select name,Id,profileImage ,initiation_time 
+            from user,friendship
+            where user.Id=friendship.friend2 and friend1=?; `,
             values: [userId * 1]
         })
     }
