@@ -74,15 +74,15 @@ module.exports = class ConversationModel {
         }
         await Promisify({
             sql: QueryBuilder.insertQuery('conversation', ['participant1', 'participant2', 'last_message', 'time', 'is_group_conversation', 'receiver', 'isSeen']),
-            values: [participant1, participant2, null, (new Date()) * 1, 0, -1, 0]
+            values: [participant1, participant2, null, (new Date()) * 1, 0, 0, 0]
         })
         return await ConversationModel.find(participant1, participant2)
     }
-    static async getConversationMessages({ conversationId, pageNumber }) {
+    static async getConversationMessages({ conversationId, pageNumber }, currentUserId) {
         Promisify({
-            sql: `update user set numUnseenMessages=numUnseenMessages-1
+            sql: `update user set numUnseenMessages=0
                 where Id=?;`,
-            values: [req.user.Id]
+            values: [currentUserId]
         })
         Promisify({
             sql: `update conversation set isSeen=1

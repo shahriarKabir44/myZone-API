@@ -9,7 +9,7 @@ ConversationRoute.post('/createConversation', (req, res) => {
         })
 })
 ConversationRoute.post('/getConversationMessages', (req, res) => {
-    ConversationModel.getConversationMessages(req.body)
+    ConversationModel.getConversationMessages(req.body, req.user.Id)
         .then(data => res.send({ data: data }))
 })
 ConversationRoute.post('/getConversationInfo', (req, res) => {

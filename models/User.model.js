@@ -34,7 +34,7 @@ module.exports = class User {
     }
     static async findById(Id) {
         let [user] = await Promisify({
-            sql: `select Id, name, email, profileImage, coverPhoto, numFriends, websocketId, serviceworker_id
+            sql: `select Id, name, email, profileImage, coverPhoto, numFriends, websocketId
              from user where Id=?;`,
             values: [Id]
         })
