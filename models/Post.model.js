@@ -2,6 +2,15 @@ const Promisify = require('../utils/Promisify')
 const QueryBuilder = require('../utils/QueryBuilder')
 
 module.exports = class Post {
+    static async edit({ postId, postBody, imageURLs }) {
+        console.log(postId, postBody, imageURLs)
+
+        return Promisify({
+            sql: `update post set body=?, attached_media=?
+                where Id=?;`,
+            values: [postBody, imageURLs, postId]
+        })
+    }
     static async delete({ postId }) {
         await Promise.all([
             Promisify({
