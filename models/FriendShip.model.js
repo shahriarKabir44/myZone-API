@@ -5,7 +5,7 @@ module.exports = class FriendShipModel {
         return await Promisify({
             sql: `select name,Id,profileImage ,initiation_time 
             from user,friendship
-            where user.Id=friendship.friend2 and friend1=?; `,
+            where user.Id=friendship.friend2 and friend1=? and friendship.friendship_type=1; `,
             values: [userId * 1]
         })
     }
