@@ -31,7 +31,12 @@ PostRouter.post('/uploadPostImage', [validateJWT, upload.single('file')], (req, 
 
     res.send({ url: req.postDir })
 })
-
+PostRouter.get('/delete/:postId', (req, res) => {
+    PostModel.delete(req.params)
+        .then(() => {
+            res.send({ success: true })
+        })
+})
 PostRouter.post('/setPostImageURLs', validateJWT, (req, res) => {
     const { Id, attached_media } = req.body
     PostModel.setPostImage(Id, attached_media)
