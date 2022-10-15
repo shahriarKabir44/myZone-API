@@ -12,7 +12,8 @@ module.exports = class Post {
     }
     static async deleteImage({ imageURL }) {
         let dir = 'uploads/' + imageURL;
-        return new Promise((resolve, reject) => {
+        console.log(dir)
+        new Promise((resolve, reject) => {
             fs.unlink(dir, (err) => {
                 if (err) {
                     console.error(err)
@@ -22,9 +23,55 @@ module.exports = class Post {
                 //file removed
             })
         })
+        let featured_groups = await Promisify({
+            sql: `select * from featured_post where 
+                    photoURL=?`,
+            values: [imageURL]
+        })
+        await Promisify({
+            sql: `delete from featured_post where photoURL=?`,
+            values: [imageURL]
+        })
+        console.log(featured_groups, imageURL)
+        for (let group of featured_groups) {
+            let { groupId, initialPhoto } = group
+            let [{ cnt }] = await Promisify({
+                sql: `select count(*) as cnt from featured_post
+                    where groupId=?;`,
+                values: [groupId]
+            })
+            if (cnt == 0) {
+                await Promisify({
+                    sql: `delete from featured_post_group where Id=?;`,
+                    values: [groupId]
+                })
+            }
+            else if (initialPhoto == imageURL) {
+                let photos = await Promisify({
+                    sql: `select * from featured_post where groupId=?;`,
+                    values: [groupId]
+                })
+                await Promisify({
+                    sql: `update featured_post_group set initialPhoto=? where Id=?;`,
+                    values: [photos[0].photoURL, groupId]
+                })
+            }
+        }
+        return
     }
     static async delete({ postId }) {
         await Promise.all([
+            (async () => {
+                let [{ attached_media }] = await Promisify({
+                    sql: `select attached_media from post where Id=?`,
+                    values: [postId]
+                })
+                attached_media = JSON.parse(attached_media)
+                console.log(attached_media)
+                for (let imageURL of attached_media) {
+                    this.deleteImage({ imageURL })
+                }
+            })(),
             Promisify({
                 sql: `delete from post_comments where postId=?`,
                 values: [postId]
