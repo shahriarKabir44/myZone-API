@@ -28,6 +28,9 @@ function startExpress() {
     connection.connect()
     app.use(express.static('uploads'))
     app.use(require('cors')())
+    app.get('/', (req, res) => {
+        res.send("test")
+    })
     app.use(express.json())
     app.use('/user', require('./Routes/User.router'))
     app.use('/post', require('./Routes/Post.router'))
