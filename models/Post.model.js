@@ -12,7 +12,6 @@ module.exports = class Post {
     }
     static async deleteImage({ imageURL }) {
         let dir = 'uploads/' + imageURL;
-        console.log(dir)
         new Promise((resolve, reject) => {
             fs.unlink(dir, (err) => {
                 if (err) {
@@ -32,7 +31,6 @@ module.exports = class Post {
             sql: `delete from featured_post where photoURL=?`,
             values: [imageURL]
         })
-        console.log(featured_groups, imageURL)
         for (let group of featured_groups) {
             let { groupId, initialPhoto } = group
             let [{ cnt }] = await Promisify({

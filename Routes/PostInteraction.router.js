@@ -20,6 +20,18 @@ PostInteractionRouter.post('/hasReacted', (req, res) => {
             res.send({ data: data })
         })
 })
+PostInteractionRouter.get('/deleteComment/:Id', (req, res) => {
+    PostInteraction.deleteComment(req.params)
+        .then(() => {
+            res.send({ success: true })
+        })
+})
+PostInteractionRouter.get('/getPostComments/:Id', (req, res) => {
+    PostInteraction.getPostComments(req.params)
+        .then((comments) => {
+            res.send({ comments })
+        })
+})
 
 PostInteractionRouter.post('/removeReactions', (req, res) => {
     PostInteraction.removeReaction(req.body)

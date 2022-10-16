@@ -2,6 +2,14 @@ const Promisify = require('../utils/Promisify')
 const QueryBuilder = require('../utils/QueryBuilder')
 
 module.exports = class PostInteraction {
+    static async getPostComments({ Id }) {
+        return Promisify({
+            sql: `select post_comments.commentBody, post_comments.time, user.name as commenterName, user.Id as commenterId,user.profileImage as commenterProfileImage,post_comments.Id as commentId
+                    from post_comments,user 
+                    where post_comments.commentedBy=user.Id and post_comments.postId=19 order by post_comments.Id desc  ;`,
+            values: [Id]
+        })
+    }
     static async createComment({ commentBody, commentedBy, postId }) {
         const time = (new Date()) * 1
         await Promisify({
@@ -21,6 +29,12 @@ module.exports = class PostInteraction {
             values: [postId, commentedBy, time]
         })
         return newComment
+    }
+    static async deleteComment({ Id }) {
+        return Promisify({
+            sql: `delete from post_comments where Id=?;`,
+            values: [Id]
+        })
     }
     static async reactToPost({ postId, reactedBy }) {
         const time = (new Date()) * 1
