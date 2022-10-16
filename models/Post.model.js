@@ -65,7 +65,6 @@ module.exports = class Post {
                     values: [postId]
                 })
                 attached_media = JSON.parse(attached_media)
-                console.log(attached_media)
                 for (let imageURL of attached_media) {
                     this.deleteImage({ imageURL })
                 }

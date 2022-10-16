@@ -38,6 +38,11 @@ PostInteractionRouter.post('/removeReactions', (req, res) => {
         .then(() => res.send({ data: 1 }))
 })
 
-
+PostInteractionRouter.post('/updateComment', (req, res) => {
+    PostInteraction.updateComment(req.body)
+        .then(() => {
+            res.send({ success: true })
+        })
+})
 
 module.exports = PostInteractionRouter

@@ -10,6 +10,13 @@ module.exports = class PostInteraction {
             values: [Id]
         })
     }
+    static async updateComment({ Id, commentBody }) {
+        let now = (new Date()) * 1
+        return Promisify({
+            sql: `update post_comments set commentBody=? ,time=? where Id=?`,
+            values: [commentBody, now, Id]
+        })
+    }
     static async createComment({ commentBody, commentedBy, postId }) {
         const time = (new Date()) * 1
         await Promisify({
