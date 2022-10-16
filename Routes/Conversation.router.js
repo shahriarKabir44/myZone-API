@@ -36,7 +36,9 @@ ConversationRoute.post('/getConversationList', (req, res) => {
             res.send({ conversationList: conversationList })
         })
 })
-
+ConversationRoute.post('/findById', (req, res) => {
+    ConversationModel.findById(req.body).then(conversation => res.send({ conversation }))
+})
 ConversationRoute.post('/getParticipantInfo', (req, res) => {
     ConversationModel.getParticipantInfo(req.body).then(data => res.send({ participant: data }))
 })

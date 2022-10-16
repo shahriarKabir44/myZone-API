@@ -11,6 +11,13 @@ module.exports = class ConversationModel {
         })
 
     }
+    static async findById({ Id }) {
+        let conversation = await Promisify({
+            sql: `select * from conversation where Id=?;`,
+            values: [Id]
+        })
+        return conversation[0]
+    }
     static async getNumUnreadMessages({ userId }) {
         try {
             let [{ numUnreadMessages }] = Promisify({
@@ -47,13 +54,7 @@ module.exports = class ConversationModel {
         await Promise.all(promises);
         return conversations
     }
-    static async findById(Id) {
-        return Promisify({
-            sql: `select * from conversation where
-                Id=?`,
-            values: [Id]
-        })
-    }
+
     static async createMessage({ conversationId, sender, body, time, receiver }) {
         Promisify({
             sql: QueryBuilder.insertQuery('message', ['conversationId', 'sender', 'body', 'time']),
@@ -97,7 +98,7 @@ module.exports = class ConversationModel {
         return messages.reverse()
     }
     static async getParticipantInfo({ currentUserId, conversationId }) {
-        let [conversation] = await ConversationModel.findById(conversationId)
+        let conversation = await ConversationModel.findById({ Id: conversationId })
         if (conversation.participant1 == currentUserId) {
             return await UserModel.findById(conversation.participant2)
         }
