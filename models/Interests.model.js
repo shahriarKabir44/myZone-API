@@ -49,4 +49,11 @@ module.exports = class InterestModel {
             values: [interest_name]
         })
     }
+    static async getCommonInterest({ friend1, friend2 }) {
+        return Promisify({
+            sql: `select interestName from user_interests where
+                userId=? or userId=?`,
+            values: [friend1, friend2]
+        })
+    }
 }

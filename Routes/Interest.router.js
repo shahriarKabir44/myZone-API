@@ -32,4 +32,11 @@ InterestRouter.post('/createInterest', (req, res) => {
 
         });
 })
+
+InterestRouter.post('/getCommonInterest', (req, res) => {
+    InterestModel.getCommonInterest(req.body)
+        .then((commonInterests) => {
+            res.send({ commonInterests })
+        })
+})
 module.exports = InterestRouter

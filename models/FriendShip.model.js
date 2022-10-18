@@ -133,7 +133,7 @@ module.exports = class FriendShipModel {
     }
     static async findUsersWithCommonInterests({ userId }) {
         return await Promisify({
-            sql: `select name,profileImage, Id from user
+            sql: `select name,profileImage,email, Id from user
                 where user.Id in (select userId from user_interests where interestName in (
                     select interestName from user_interests 
                     where userId=?
