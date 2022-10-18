@@ -262,7 +262,7 @@ const RootQueryType = new GraphQLObjectType({
                         where post.posted_by in 
                         (select friend2 from friendship where friend1=? and friendship_type=1 )
                         or post.posted_by=? 
-                        order by posted_on desc limit ?,10;`,
+                        order by posted_on desc limit ?,5;`,
                     values: [args.userId, args.userId, args.pageNumber]
                 })
             }

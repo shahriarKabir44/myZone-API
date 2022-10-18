@@ -19,7 +19,6 @@ module.exports = class Post {
                     return
                 }
                 resolve()
-                //file removed
             })
         })
         let featured_groups = await Promisify({
