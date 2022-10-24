@@ -58,6 +58,13 @@ FriendshipRouter.post('/countMutualFriends', (req, res) => {
         })
 })
 
+FriendshipRouter.get('/getFriendRequests/:userId', (req, res) => {
+    FriendShipModel.getFriendRequests(req.params)
+        .then(friendRequests => {
+            res.send({ friendRequests })
+        })
+})
+
 FriendshipRouter.post('/findUsersWithCommonInterests', (req, res) => {
     FriendShipModel.findUsersWithCommonInterests(req.body)
         .then(usersWithCommonInterests => {
