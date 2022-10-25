@@ -15,7 +15,6 @@ module.exports = class Post {
         new Promise((resolve, reject) => {
             fs.unlink(dir, (err) => {
                 if (err) {
-                    console.error(err)
                     return
                 }
                 resolve()

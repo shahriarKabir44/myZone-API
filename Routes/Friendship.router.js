@@ -3,7 +3,6 @@ const validateJWT = require('../utils/validateJWT')
 const FriendShipModel = require('../models/FriendShip.model')
 
 FriendshipRouter.get('/getFriends/:userId', validateJWT, (req, res) => {
-    console.log(req.params)
     FriendShipModel.getFriends(req.params)
         .then((friends) => {
             res.send({ data: friends })
