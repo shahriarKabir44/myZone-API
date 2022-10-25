@@ -12,7 +12,7 @@ module.exports = class FriendShipModel {
     static async getFriendRequests({ userId }) {
         console.log(userId)
         return Promisify({
-            sql: `select name,Id,profileImage from user 
+            sql: `select name,Id,profileImage,email from user 
                 where user.Id in (select friend2 from friendship where friend1=?
                     and friendship_type=3)`,
             values: [userId]
