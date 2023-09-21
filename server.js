@@ -2,9 +2,10 @@ const express = require('express')
 const graphqlHTTP = require('express-graphql');
 const cluster = require('cluster');
 const totalCPUs = require('os').cpus().length;
-const connection = require('./utils/db')
-const validateJWT = require('./utils/validateJWT')
-require('dotenv').config()
+const validateJWT = require('./utils/validateJWT');
+const { initConnection } = require('./utils/db');
+require('dotenv').config({ path: `${__dirname}/.env` })
+
 connection.connect()
 if (cluster.isMaster) {
     for (let i = 0; i < totalCPUs; i++) {
@@ -25,7 +26,7 @@ function startExpress() {
 
     let app = express()
 
-    connection.connect()
+    initConnection(process.env)
     app.use(express.static('uploads'))
     app.use(require('cors')())
     app.get('/', (req, res) => {
