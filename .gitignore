@@ -1,3 +1,5 @@
 /node_modules
 uploads/*
 .env
+/migrations/logs.txt
+/migrations/config.json
