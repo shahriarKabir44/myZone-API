@@ -11,3 +11,4 @@
 1696607141019create-table_group_conversation_members.js
 1696607141020create-table_post_comments.js
 1696607141020create-table_post_reactions.js
+1696609381426create-table_user_interests.js
