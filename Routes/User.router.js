@@ -13,7 +13,9 @@ const storage = multer.diskStorage({
             return cb(null, dir)
         }
         else {
-            fs.mkdirSync(dir)
+            fs.mkdirSync(dir, {
+                recursive: true
+            })
             return cb(null, dir)
         }
     },

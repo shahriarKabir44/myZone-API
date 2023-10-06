@@ -6,13 +6,15 @@ let connection = {
 
 
 function initConnection(env) {
-    connection.connection = mysql.createConnection({
+    let connectionObj = mysql.createConnection({
         host: env.dbHost,
         user: env.dbUser,
         password: env.dbPassword,
         database: env.dbName,
         port: 3306
     })
+    connectionObj.connect()
+    connection.connection = connectionObj
 }
 
 

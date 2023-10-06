@@ -6,7 +6,7 @@ const validateJWT = require('./utils/validateJWT');
 const { initConnection } = require('./utils/db');
 require('dotenv').config({ path: `${__dirname}/.env` })
 
-connection.connect()
+
 if (cluster.isMaster) {
     for (let i = 0; i < totalCPUs; i++) {
         cluster.fork();
