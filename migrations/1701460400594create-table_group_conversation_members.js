@@ -1,11 +1,11 @@
 const {Table} = require('migratify/templates/Migration.class')
 let newTable = new Table("group_conversation_members");
 newTable.addColumn('groupId','INT')
-	.setNullable(false)
+	.setNullable(true)
 	 .setDefaultValue('')
 	 .setUnique(false)
 newTable.addColumn('memberId','INT')
-	.setNullable(false)
+	.setNullable(true)
 	 .setDefaultValue('')
 	 .setUnique(false)
 newTable.addForeignKey('groupId','group_conversation','Id');

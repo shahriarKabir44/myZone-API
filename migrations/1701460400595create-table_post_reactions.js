@@ -1,15 +1,15 @@
 const {Table} = require('migratify/templates/Migration.class')
 let newTable = new Table("post_reactions");
 newTable.addColumn('postId','INT')
-	.setNullable(false)
+	.setNullable(true)
 	 .setDefaultValue('')
 	 .setUnique(false)
 newTable.addColumn('reactedBy','INT')
-	.setNullable(false)
+	.setNullable(true)
 	 .setDefaultValue('')
 	 .setUnique(false)
 newTable.addColumn('time','BIGINT')
-	.setNullable(false)
+	.setNullable(true)
 	 .setDefaultValue('')
 	 .setUnique(false)
 newTable.addForeignKey('reactedBy','user','Id');
