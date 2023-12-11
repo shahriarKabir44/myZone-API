@@ -1,0 +1,10 @@
+{
+    "dbPassword": "7rL0Ht7ldfxbzaiR",
+    "dbPort": "4000",
+    "dbName": "myzone",
+    "dbUser": "2tQgACJoc2LEJdP.root",
+    "dbHost": "gateway01.ap-southeast-1.prod.aws.tidbcloud.com",
+    "ssl": {
+        "rejectUnauthorized": true
+    }
+}

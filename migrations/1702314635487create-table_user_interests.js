@@ -8,7 +8,6 @@ newTable.addColumn('interestName','MEDIUMTEXT')
 	.setNullable(true)
 	 .setDefaultValue('')
 	 .setUnique(false)
-newTable.addForeignKey('userId','user','Id');
 module.exports = async () => {
 	return newTable.create()
 }

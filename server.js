@@ -4,7 +4,7 @@ const cluster = require('cluster');
 const totalCPUs = require('os').cpus().length;
 const validateJWT = require('./utils/validateJWT');
 const { initConnection } = require('./utils/db');
-require('dotenv').config({ path: `${__dirname}/.env` })
+require('dotenv').config({ path: `${__dirname}/.env.prod` })
 
 
 if (cluster.isMaster) {
