@@ -1,5 +1,4 @@
 const express = require('express')
-const graphqlHTTP = require('express-graphql');
 
 const { createHandler } = require('graphql-http/lib/use/express')
 const cluster = require('cluster');
