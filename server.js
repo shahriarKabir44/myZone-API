@@ -4,6 +4,7 @@ const cluster = require('cluster');
 const totalCPUs = require('os').cpus().length;
 const validateJWT = require('./utils/validateJWT');
 const { initConnection } = require('./utils/db');
+const Promisify = require('./utils/Promisify');
 require('dotenv').config({ path: `${__dirname}/.env.prod` })
 
 
@@ -48,7 +49,14 @@ function startExpress() {
             graphiql: true
         }
     )));
-    app.listen(process.env.PORT || 4000)
+    app.get('/test', (req, res) => {
+        Promisify({
+            sql: `SELECT * FROM interest_names LIMIT 100`,
+            values: []
+        }).then(data => {
+            res.send(data)
+        })
+    })
 
 }
 
