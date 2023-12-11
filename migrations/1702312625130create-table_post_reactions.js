@@ -1,4 +1,4 @@
-const {Table} = require('migratify/templates/Migration.class')
+const {Table} = require('migrations/templates/Migration.class')
 let newTable = new Table("post_reactions");
 newTable.addColumn('postId','INT')
 	.setNullable(true)
@@ -15,5 +15,5 @@ newTable.addColumn('time','BIGINT')
 newTable.addForeignKey('reactedBy','user','Id');
 newTable.addForeignKey('postId','post','Id');
 module.exports = async () => {
-	newTable.create()
+	return newTable.create()
 }

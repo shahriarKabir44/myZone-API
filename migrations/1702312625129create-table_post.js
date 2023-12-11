@@ -1,4 +1,4 @@
-const {Table} = require('migratify/templates/Migration.class')
+const {Table} = require('migrations/templates/Migration.class')
 let newTable = new Table("post");
 newTable.setID('Id');
 newTable.addColumn('body','MEDIUMTEXT')
@@ -31,5 +31,5 @@ newTable.addColumn('numComments','BIGINT(8) UNSIGNED ZEROFILL')
 	 .setUnique(false)
 newTable.addForeignKey('posted_by','user','Id');
 module.exports = async () => {
-	newTable.create()
+	return newTable.create()
 }

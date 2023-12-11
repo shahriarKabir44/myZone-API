@@ -1,4 +1,4 @@
-const {Table} = require('migratify/templates/Migration.class')
+const {Table} = require('migrations/templates/Migration.class')
 let newTable = new Table("user");
 newTable.setID('Id');
 newTable.addColumn('name','VARCHAR(45)')
@@ -42,5 +42,5 @@ newTable.addColumn('numUnseenMessages','INT(10) UNSIGNED ZEROFILL')
 	 .setDefaultValue('')
 	 .setUnique(false)
 module.exports = async () => {
-	newTable.create()
+	return newTable.create()
 }

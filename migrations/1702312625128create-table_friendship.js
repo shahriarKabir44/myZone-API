@@ -1,4 +1,4 @@
-const {Table} = require('migratify/templates/Migration.class')
+const {Table} = require('migrations/templates/Migration.class')
 let newTable = new Table("friendship");
 newTable.addColumn('friend1','INT')
 	.setNullable(true)
@@ -19,5 +19,5 @@ newTable.addColumn('initiation_time','BIGINT')
 newTable.addForeignKey('friend1','user','Id');
 newTable.addForeignKey('friend2','user','Id');
 module.exports = async () => {
-	newTable.create()
+	return newTable.create()
 }

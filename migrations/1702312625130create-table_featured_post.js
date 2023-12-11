@@ -1,6 +1,6 @@
-const {Table} = require('migratify/templates/Migration.class')
+const {Table} = require('migrations/templates/Migration.class')
 let newTable = new Table("featured_post");
-newTable.addColumn('photoURL','TEXT(65536)')
+newTable.addColumn('photoURL','MEDIUMTEXT')
 	.setNullable(true)
 	 .setDefaultValue('')
 	 .setUnique(false)
@@ -10,5 +10,5 @@ newTable.addColumn('groupId','INT')
 	 .setUnique(false)
 newTable.addForeignKey('groupId','featured_post_group','Id');
 module.exports = async () => {
-	newTable.create()
+	return newTable.create()
 }
