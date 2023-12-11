@@ -1,5 +1,7 @@
 const express = require('express')
 const graphqlHTTP = require('express-graphql');
+
+const { createHandler } = require('graphql-http/lib/use/express')
 const cluster = require('cluster');
 const totalCPUs = require('os').cpus().length;
 const validateJWT = require('./utils/validateJWT');
@@ -43,12 +45,12 @@ function startExpress() {
     app.use('/conversation', validateJWT, require('./Routes/Conversation.router'))
     app.use('/search', require('./Routes/Searching.router'))
     app.use('/notification', validateJWT, require('./Routes/Notification.router'))
-    app.use('/graphql', graphqlHTTP.graphqlHTTP(req => (
-        {
-            schema: require('./Graphql/GraphQL.Schema'),
-            graphiql: true
-        }
-    )));
+
+
+    app.all('/graphql', createHandler({
+        schema: require('./Graphql/GraphQL.Schema')
+    }))
+
     app.get('/test', (req, res) => {
         Promisify({
             sql: `SELECT * FROM interest_names LIMIT 100`,
