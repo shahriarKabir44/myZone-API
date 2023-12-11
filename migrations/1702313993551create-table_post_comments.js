@@ -1,4 +1,4 @@
-const {Table} = require('migrations/templates/Migration.class')
+const {Table} = require('migratify/templates/Migration.class')
 let newTable = new Table("post_comments");
 newTable.setID('Id');
 newTable.addColumn('commentBody','MEDIUMTEXT')

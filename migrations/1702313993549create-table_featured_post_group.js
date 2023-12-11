@@ -1,4 +1,4 @@
-const {Table} = require('migrations/templates/Migration.class')
+const {Table} = require('migratify/templates/Migration.class')
 let newTable = new Table("featured_post_group");
 newTable.setID('Id');
 newTable.addColumn('label','VARCHAR(45)')

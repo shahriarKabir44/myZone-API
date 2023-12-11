@@ -1,4 +1,4 @@
-const {Table} = require('migrations/templates/Migration.class')
+const {Table} = require('migratify/templates/Migration.class')
 let newTable = new Table("group_conversation_members");
 newTable.addColumn('groupId','INT')
 	.setNullable(true)

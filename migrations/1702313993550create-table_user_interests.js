@@ -1,4 +1,4 @@
-const {Table} = require('migrations/templates/Migration.class')
+const {Table} = require('migratify/templates/Migration.class')
 let newTable = new Table("user_interests");
 newTable.addColumn('userId','INT')
 	.setNullable(true)

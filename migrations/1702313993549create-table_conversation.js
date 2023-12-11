@@ -1,4 +1,4 @@
-const {Table} = require('migrations/templates/Migration.class')
+const {Table} = require('migratify/templates/Migration.class')
 let newTable = new Table("conversation");
 newTable.setID('Id');
 newTable.addColumn('participant1','INT')
