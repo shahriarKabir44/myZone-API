@@ -58,6 +58,6 @@ function startExpress() {
             res.send(data)
         })
     })
-
+    app.listen(process.env.PORT || 4000)
 }
 
