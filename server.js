@@ -6,6 +6,8 @@ const totalCPUs = require('os').cpus().length;
 const validateJWT = require('./utils/validateJWT');
 const { initConnection } = require('./utils/db');
 const Promisify = require('./utils/Promisify');
+const commands = process.argv.filter((item, index) => index > 1)
+
 if (commands[0] == 'dev') {
     require('dotenv').config({
         path: './.env.prod'
