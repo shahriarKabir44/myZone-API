@@ -3,3 +3,6 @@ uploads/*
 .env.prod
 /migrations/logs.txt
 /migrations/config.json
+
+**/.vs
+**/.vscode

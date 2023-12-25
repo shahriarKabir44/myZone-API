@@ -6,8 +6,6 @@ const totalCPUs = require('os').cpus().length;
 const validateJWT = require('./utils/validateJWT');
 const { initConnection } = require('./utils/db');
 const Promisify = require('./utils/Promisify');
-require('dotenv').config({ path: `${__dirname}/.env.prod` })
-
 
 if (cluster.isMaster) {
     for (let i = 0; i < totalCPUs; i++) {
