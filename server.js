@@ -6,7 +6,12 @@ const totalCPUs = require('os').cpus().length;
 const validateJWT = require('./utils/validateJWT');
 const { initConnection } = require('./utils/db');
 const Promisify = require('./utils/Promisify');
+if (commands[0] == 'dev') {
+    require('dotenv').config({
+        path: './.env.prod'
+    })
 
+}
 if (cluster.isMaster) {
     for (let i = 0; i < totalCPUs; i++) {
         cluster.fork();
