@@ -1,0 +1,70 @@
+version: '3.4'
+
+services:
+  myzone_db:
+    image: mysql:latest
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "mysqladmin",
+          "ping",
+          "-h",
+          "localhost",
+          "--silent"
+        ]
+      interval: 100s
+      timeout: 200s
+      retries: 1000
+    environment:
+      - MYSQL_ROOT_PASSWORD=Randompassword1234.
+      - MYSQL_DATABASE=my_zone
+      - MYSQL_PASSWORD=Randompassword1234.
+    ports:
+      - "3300:3306"
+    volumes:
+      - ./migrations/my_zone.sql:/docker-entrypoint-initdb.d/my_zone.sql
+  myzone_api:
+    image: shahriarkabir/myzone_api:latest
+    ports:
+      - "4000:4000"
+    environment:
+      - jwtSecret=erhgrehgirehgregir
+      - dbPort=3306
+      - dbName=my_zone
+      - dbUser=root
+      - dbPassword=Randompassword1234.
+      - dbHost=myzone_db
+      - ssl=null
+    depends_on:
+      - myzone_db
+
+  myzonewsserver:
+    image: shahriarkabir/myzonewsserver:latest
+    ports:
+      - "4020:4020"
+    environment:
+      - jwtSecret=erhgrehgirehgregir
+      - dbPort=3306
+      - dbName=my_zone
+      - dbUser=root
+      - dbPassword=Randompassword1234.
+      - dbHost=myzone_db
+      - ssl=null
+    depends_on:
+      - myzone_db
+      - myzone_api
+      - myzone
+
+  myzone:
+    image: shahriarkabir/myzone:latest
+    environment:
+      NODE_ENV: production
+    ports:
+      - 3000:3000
+    depends_on:
+      - myzone_db
+      - myzone_api
+
+volumes:
+  mysql-data:
