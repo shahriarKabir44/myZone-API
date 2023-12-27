@@ -37,7 +37,8 @@ services:
       - dbHost=myzone_db
       - ssl=null
     depends_on:
-      - myzone_db
+      myzone_db:
+        condition: service_started
 
   myzonewsserver:
     image: shahriarkabir/myzonewsserver:latest
@@ -52,9 +53,8 @@ services:
       - dbHost=myzone_db
       - ssl=null
     depends_on:
-      - myzone_db
-      - myzone_api
-      - myzone
+      myzone_db:
+        condition: service_started
 
   myzone:
     image: shahriarkabir/myzone:latest
