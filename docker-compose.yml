@@ -38,7 +38,7 @@ services:
       - ssl=null
     depends_on:
       myzone_db:
-        condition: service_started
+        condition: service_healthy
 
   myzonewsserver:
     image: shahriarkabir/myzonewsserver:latest
@@ -54,7 +54,7 @@ services:
       - ssl=null
     depends_on:
       myzone_db:
-        condition: service_started
+        condition: service_healthy
 
   myzone:
     image: shahriarkabir/myzone:latest
